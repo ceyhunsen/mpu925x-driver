@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief Header file for MPU-925X driver.
  * @author Ceyhun Şen
+ * @brief Header file for MPU-925X driver.
  * */
 
 /*

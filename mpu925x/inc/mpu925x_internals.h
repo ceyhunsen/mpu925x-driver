@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief Internal definitions for MPU-925x driver.
  * @author Ceyhun Şen
+ * @brief Internal definitions for MPU-925X driver.
  * */
 
 /*

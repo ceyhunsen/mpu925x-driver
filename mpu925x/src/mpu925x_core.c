@@ -1,7 +1,7 @@
 /**
  * @file
- * @brief Core functions for MPU-925x driver.
  * @author Ceyhun Şen
+ * @brief Core functions for MPU-925X driver.
  * */
 
 /*
