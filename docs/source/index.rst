@@ -1,7 +1,7 @@
-.. _introduction-and-general-info:
+.. _introduction:
 
-Introduction And General Info
-=============================
+Introduction
+============
 
 Welcome to the documentation for MPU-925X driver. This driver supports MPU-9250 and MPU-9255 sensors.
 
@@ -13,6 +13,7 @@ Units
 * Acceleration from accelerometer: G
 * Rotation from gyroscope: Degrees per second
 * Magnetic field from magnetometer: Gauss
+* Temperature from thermometer: C degree
 
 Compatibility
 ^^^^^^^^^^^^^

@@ -3,4 +3,14 @@
 Advanced Usage
 ==============
 
-asdas
+.. toctree::
+	:maxdepth: 3
+	:caption: Contents:
+
+	initialization
+	accelerometer
+	gyroscope
+	magnetometer
+	general-settings
+	offset-cancellation
+	fifo
