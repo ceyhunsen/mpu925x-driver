@@ -1,4 +1,4 @@
-.. API Reference for MPU-925X driver.
+.. _api-reference:
 
 API Reference
 =============
