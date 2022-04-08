@@ -1,4 +1,4 @@
-.. _acceleromter:
+.. _accelerometer:
 
 Accelerometer
 =============

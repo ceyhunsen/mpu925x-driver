@@ -195,7 +195,7 @@ void mpu925x_get_temperature(mpu925x_t *mpu925x);
 
 // General settings
 void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_divider);
-void mpu925x_set_clock_source(mpu925x_t *mpu925x, uint8_t clock);
+void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock);
 
 // FIFO operations
 void mpu925x_set_fifo_mode(mpu925x_t *mpu925x, mpu925x_fifo_mode mode);
