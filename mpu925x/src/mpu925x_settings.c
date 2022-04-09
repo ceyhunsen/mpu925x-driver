@@ -307,9 +307,9 @@ void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset)
  ******************************************************************************/
 
 /**
- * @brief Set gyro scale.
- * @param mpu925x mpu925x_t data struct.
- * @param scale Gyro scale.
+ * @brief Set gyroscope full-scale range.
+ * @param mpu925x Struct that holds sensor data.
+ * @param scale Gyroscope full-scale range to be set.
  * */
 void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale)
 {
@@ -343,7 +343,7 @@ void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale sca
 
 /**
  * @brief Set gyroscope digital low pass filter setting.
- * @param mpu925x Main struct.
+ * @param mpu925x Struct that holds sensor data.
  * @param g_fchoice Gyroscope f_choice bits.
  * @param dlpf Digital low pass filter setting.
  * */
@@ -361,9 +361,11 @@ void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t d
 }
 
 /**
- * @brief Get and set gyroscope offset.
- * @param mpu925x Main struct.
- * @param sampling_amount Amount of data that will be read.
+ * @brief Get and set gyroscope offset cancellation values.
+ * @param mpu925x Struct that holds sensor data.
+ * @param sampling_amount Sampling amount for rotation values.
+ * @see mpu925x_get_gyroscope_offset
+ * @see mpu925x_set_gyroscope_offset
  * */
 void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount)
 {
@@ -374,10 +376,10 @@ void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling
 }
 
 /**
- * @brief Gets the offset values of x, y and z axis of gyroscope.
- * @param mpu925x Main struct.
- * @param sampling_amount Amount of data that will be read.
- * @param offset Array of size 3 that will hold offset values.
+ * @brief Get gyroscope offset cancellation values.
+ * @param mpu925x Struct that holds sensor data.
+ * @param sampling_amount Sampling amount for rotation values.
+ * @param offset 3d array which holds gyroscope offset cancellation values.
  * @see mpu925x_set_gyroscope_offset
  * */
 void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
@@ -421,7 +423,10 @@ void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
 }
 
 /**
- * @brief Sets the offset value of x, y and z axis of gyroscope.
+ * @brief Set gyroscope offset cancellation values.
+ * @param mpu925x Struct that holds sensor data.
+ * @param offset 3d array which holds gyroscope offset cancellation values.
+ * @see mpu925x_get_gyroscope_offset
  * */
 void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset)
 {

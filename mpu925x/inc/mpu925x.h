@@ -103,7 +103,7 @@ typedef enum mpu925x_accelerometer_scale {
 
 /**
  * @enum mpu925x_gyroscope_scale
- * Gyro ranges for gyrometer.
+ * @brief Gyroscope full-scale ranges for gyroscope.
  * */
 typedef enum mpu925x_gyroscope_scale {
 	_250dps,

@@ -103,7 +103,9 @@ void mpu925x_get_acceleration_raw(mpu925x_t *mpu925x)
 }
 
 /**
- * @brief Get rotation in dps's.
+ * @brief Get rotation in degrees per second.
+ * @param mpu925x Struct that holds sensor data.
+ * @see mpu925x_get_rotation_raw
  * */
 void mpu925x_get_rotation(mpu925x_t *mpu925x)
 {
@@ -116,6 +118,8 @@ void mpu925x_get_rotation(mpu925x_t *mpu925x)
 
 /**
  * @brief Get raw rotation data.
+ * @param mpu925x Struct that holds sensor data.
+ * @see mpu925x_get_rotation
  * */
 void mpu925x_get_rotation_raw(mpu925x_t *mpu925x)
 {
