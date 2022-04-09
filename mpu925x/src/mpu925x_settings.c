@@ -159,9 +159,9 @@ void mpu925x_clear_fifo(mpu925x_t *mpu925x)
  ******************************************************************************/
 
 /**
- * @brief Set acceleration scale range.
- * @param mpu925x mpu925x_t data struct.
- * @param scale Accelerometer scale.
+ * @brief Set acceleration full-scale range.
+ * @param mpu925x Struct that holds sensor data.
+ * @param scale Accelerometer full-scale range to be set.
  * */
 void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale)
 {
@@ -194,8 +194,8 @@ void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
 }
 
 /**
- * @brief Set accelerometer digital low pass filter.
- * @param mpu925x Main struct.
+ * @brief Set accelerometer digital low pass filter setting.
+ * @param mpu925x Struct that holds sensor data.
  * @param a_fchoice Accelerometer fchoice bit.
  * @param dlpf Digital low pass filter choice.
  * */
@@ -212,27 +212,30 @@ void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8
 }
 
 /**
- * @brief Calibrate accelerometer.
- * @param mpu925x Main struct.
- * @param sample_count Sample count.
+ * @brief Get and set accelerometer offset cancellation values.
+ * @param mpu925x Struct that holds sensor data.
+ * @param sampling_amount Sampling amount for acceleration values.
  * @see mpu925x_get_accelerometer_offset
  * @see mpu925x_set_accelerometer_offset
  * */
-void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sample_count)
+void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount)
 {
 	int16_t offset[3];
 
-	mpu925x_get_accelerometer_offset(mpu925x, sample_count, offset);
+	mpu925x_get_accelerometer_offset(mpu925x, sampling_amount, offset);
 	mpu925x_set_accelerometer_offset(mpu925x, offset);
 }
 
 /**
  * @brief Get accelerometer offset cancellation value.
+ * @param mpu925x Struct that holds sensor data.
+ * @param sampling_amount Sampling amount for acceleration values.
+ * @param offset 3d array which will hold accelerometer offset cancellation values.
  * */
-void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sample_count, int16_t *offset)
+void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
 {
 	float average[3] = {0.0, 0.0, 0.0};
-	for (uint16_t i = 0; i < sample_count; i++) {
+	for (uint16_t i = 0; i < sampling_amount; i++) {
 		// Read data.
 		mpu925x_get_acceleration_raw(mpu925x);
 
@@ -284,6 +287,8 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sample_count,
 
 /**
  * @brief Set accelerometer offset cancellation value.
+ * @param mpu925x Struct that holds sensor data.
+ * @param offset 3d array which holds accelerometer offset cancellation values.
  * */
 void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset)
 {
@@ -358,31 +363,31 @@ void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t d
 /**
  * @brief Get and set gyroscope offset.
  * @param mpu925x Main struct.
- * @param sample_count Amount of data that will be read.
+ * @param sampling_amount Amount of data that will be read.
  * */
-void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sample_count)
+void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount)
 {
 	int16_t offset[3];
 
-	mpu925x_get_gyroscope_offset(mpu925x, sample_count, offset);
+	mpu925x_get_gyroscope_offset(mpu925x, sampling_amount, offset);
 	mpu925x_set_gyroscope_offset(mpu925x, offset);
 }
 
 /**
  * @brief Gets the offset values of x, y and z axis of gyroscope.
  * @param mpu925x Main struct.
- * @param sample_count Amount of data that will be read.
+ * @param sampling_amount Amount of data that will be read.
  * @param offset Array of size 3 that will hold offset values.
  * @see mpu925x_set_gyroscope_offset
  * */
-void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sample_count, int16_t *offset)
+void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
 {
 	// Offsets of x, y and z axis is seperate.
 	for (uint8_t i = 0; i < 3; i++) {
 		// Read rotation data and get average.
 		int16_t fifo_data;
 		float average = 0.0;
-		for (uint16_t j = 0; j < sample_count; j++) {
+		for (uint16_t j = 0; j < sampling_amount; j++) {
 			mpu925x_get_rotation_raw(mpu925x);
 			fifo_data = mpu925x->sensor_data.rotation_raw[i];
 

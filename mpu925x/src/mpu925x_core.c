@@ -74,6 +74,8 @@ void mpu925x_get_all_raw(mpu925x_t *mpu925x)
 
 /**
  * @brief Get acceleration in G's.
+ * @param mpu925x Struct that holds sensor data.
+ * @see mpu925x_get_acceleration_raw
  * */
 void mpu925x_get_acceleration(mpu925x_t *mpu925x)
 {
@@ -86,6 +88,8 @@ void mpu925x_get_acceleration(mpu925x_t *mpu925x)
 
 /**
  * @brief Get raw acceleration data.
+ * @param mpu925x Struct that holds sensor data.
+ * @see mpu925x_get_acceleration
  * */
 void mpu925x_get_acceleration_raw(mpu925x_t *mpu925x)
 {

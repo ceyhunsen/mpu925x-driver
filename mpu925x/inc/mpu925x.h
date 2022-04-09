@@ -69,7 +69,7 @@ typedef enum mpu925x_clock {
 
 /**
  * @enum mpu925x_orientation
- * Orientation of the sensor.
+ * @brief Orientation of the sensor.
  * */
 typedef enum mpu925x_orientation {
 	x_plus,
@@ -92,7 +92,7 @@ typedef enum mpu925x_fifo_mode {
 
 /**
  * @enum mpu925x_accelerometer_scale
- * Acceleration ranges for accelerometer.
+ * @brief Accelerometer full-scale ranges.
  * */
 typedef enum mpu925x_accelerometer_scale {
 	_2g,
@@ -207,15 +207,15 @@ void mpu925x_clear_fifo(mpu925x_t *mpu925x);
 // Accelerometer settings
 void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale);
 void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
-void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sample_count);
-void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sample_count, int16_t *offset);
+void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount);
+void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
 void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset);
 
 // Gyroscope settings
 void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale);
 void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
-void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sample_count);
-void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sample_count, int16_t *offset);
+void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount);
+void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
 void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset);
 
 // Magnetometer settings
