@@ -219,7 +219,6 @@ void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
 void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset);
 
 // Magnetometer settings
-void mpu925x_set_magnet_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode, mpu925x_magnetometer_bit_mode bit_mode);
 void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode);
 void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode);
 

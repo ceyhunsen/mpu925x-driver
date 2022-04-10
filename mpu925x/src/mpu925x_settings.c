@@ -446,8 +446,9 @@ void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset)
 
 /**
  * @brief Set magnetometer measurement mode.
- * @param mpu925x Main struct.
- * @param measurement_mode Measurement mode for magnetometer.
+ * @param mpu925x Struct that holds sensor data.
+ * @param measurement_mode Measurement mode for magnetometer to be set.
+ * @see mpu925x_magnetometer_measurement_mode
  * */
 void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode)
 {
@@ -493,8 +494,9 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 
 /**
  * @brief Set magnetometers bit mode.
- * @param mpu925x Main struct.
- * @param bit_mode Bit mode for magnetometer.
+ * @param mpu925x Struct that holds sensor data.
+ * @param bit_mode Bit mode for magnetometer to be set.
+ * @see mpu925x_magnetometer_bit_mode
  * */
 void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode)
 {

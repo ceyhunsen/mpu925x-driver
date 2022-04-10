@@ -132,13 +132,14 @@ void mpu925x_get_rotation_raw(mpu925x_t *mpu925x)
 }
 
 /**
- * @brief Get magnetic field data.
+ * @brief Get magnetic field in micro Gauss.
+ * @param mpu925x Struct that holds sensor data.
  * */
 void mpu925x_get_magnetic_field(mpu925x_t *mpu925x)
 {
 	mpu925x_get_magnetic_field_raw(mpu925x);
 
-	// Calculate magnetic_field data in mikro Gauss.
+	// Calculate magnetic_field data in micro Gauss.
 	for (uint8_t i = 0; i < 3; i++) {
 		mpu925x->sensor_data.magnetic_field[i] = mpu925x->sensor_data.magnet_raw[i] * mpu925x->settings.magnetometer_lsb * mpu925x->settings.magnetometer_coefficient[i];
 	}
@@ -146,6 +147,7 @@ void mpu925x_get_magnetic_field(mpu925x_t *mpu925x)
 
 /**
  * @brief Get raw magnetic field data.
+ * @param mpu925x Struct that holds sensor data.
  * */
 void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 {
@@ -173,7 +175,8 @@ void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 }
 
 /**
- * @brief Get temperature data.
+ * @brief Get temperature in C degree.
+ * @param mpu925x Struct that holds sensor data.
  * */
 void mpu925x_get_temperature(mpu925x_t *mpu925x)
 {
@@ -184,7 +187,8 @@ void mpu925x_get_temperature(mpu925x_t *mpu925x)
 }
 
 /**
- * @brief Get temperature data.
+ * @brief Get raw temperature data.
+ * @param mpu925x Struct that holds sensor data.
  * */
 void mpu925x_get_temperature_raw(mpu925x_t *mpu925x)
 {
