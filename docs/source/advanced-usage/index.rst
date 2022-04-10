@@ -8,9 +8,8 @@ Advanced Usage
 	:caption: Contents:
 
 	initialization
+	general-settings
 	accelerometer
 	gyroscope
 	magnetometer
-	general-settings
-	offset-cancellation
 	fifo

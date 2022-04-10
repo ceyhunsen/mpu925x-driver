@@ -37,8 +37,8 @@
 
 /**
  * @brief Set sample rate divider.
- * @param mpu925x Main struct.
- * @param sample_rate_divider Sample rate divider.
+ * @param mpu925x Struct that holds sensor data.
+ * @param sample_rate_divider Sample rate divider sentence.
  * */
 void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_divider)
 {
@@ -47,8 +47,9 @@ void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_div
 
 /**
  * @brief Set clock source.
- * @param mpu925x Main struct.
- * @param clock Clock select option. 0 for internal 20 Hz clock, 1 for PLL.
+ * @param mpu925x Struct that holds sensor data.
+ * @param clock Clock select option.
+ * @see mpu925x_clock
  * */
 void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock)
 {
