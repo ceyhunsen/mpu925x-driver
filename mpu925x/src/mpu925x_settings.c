@@ -76,7 +76,7 @@ void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock)
 
 /**
  * @brief Set FIFO mode.
- * @param mpu925x Main struct.
+ * @param mpu925x Struct that holds sensor data.
  * @param mode FIFO mode.
  * */
 void mpu925x_set_fifo_mode(mpu925x_t *mpu925x, mpu925x_fifo_mode mode)
@@ -109,8 +109,7 @@ void mpu925x_set_fifo_mode(mpu925x_t *mpu925x, mpu925x_fifo_mode mode)
 
 /**
  * @brief Enable or disable FIFO for specific axis and... things.
- * See FIFO enable defines in mpu925x.h for more clearance.
- * @param mpu925x Main struct.
+ * @param mpu925x Struct that holds sensor data.
  * @param fifo_sentence This sentence will be directly written to FIFO enable register.
  * */
 void mpu925x_set_fifo(mpu925x_t *mpu925x, uint8_t fifo_sentence)
@@ -120,7 +119,7 @@ void mpu925x_set_fifo(mpu925x_t *mpu925x, uint8_t fifo_sentence)
 
 /**
  * @brief Get FIFO count.
- * @param mpu925x Main struct.
+ * @param mpu925x Struct that holds sensor data.
  * @returns FIFO count.
  * */
 uint16_t mpu925x_get_fifo_count(mpu925x_t *mpu925x)
@@ -133,7 +132,7 @@ uint16_t mpu925x_get_fifo_count(mpu925x_t *mpu925x)
 
 /**
  * @brief Get FIFO data.
- * @param mpu925x Main struct.
+ * @param mpu925x Struct that holds sensor data.
  * @returns 2 byte FIFO data.
  * */
 int16_t mpu925x_get_fifo_data(mpu925x_t *mpu925x)
@@ -147,7 +146,7 @@ int16_t mpu925x_get_fifo_data(mpu925x_t *mpu925x)
 
 /**
  * @brief Clear FIFO buffer.
- * @param mpu925x Main struct.
+ * @param mpu925x Struct that holds sensor data.
  * */
 void mpu925x_clear_fifo(mpu925x_t *mpu925x)
 {
@@ -160,7 +159,7 @@ void mpu925x_clear_fifo(mpu925x_t *mpu925x)
  ******************************************************************************/
 
 /**
- * @brief Set acceleration full-scale range.
+ * @brief Set accelerometer full-scale range.
  * @param mpu925x Struct that holds sensor data.
  * @param scale Accelerometer full-scale range to be set.
  * */
@@ -494,7 +493,7 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 }
 
 /**
- * @brief Set magnetometers bit mode.
+ * @brief Set magnetometer bit mode.
  * @param mpu925x Struct that holds sensor data.
  * @param bit_mode Bit mode for magnetometer to be set.
  * @see mpu925x_magnetometer_bit_mode

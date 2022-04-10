@@ -25,6 +25,28 @@ Bus read functions' prototype is like this:
 
 This function wants to read ``size`` byte amount of data from bus slave's ``reg`` register which address is ``slave_address`` and stores it in ``buffer`` array.
 
+Arduino I2C example:
+
+.. code-block:: c
+
+	uint8_t arduino_i2c_read(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size)
+	{
+	  Wire.begin();
+	  Wire.beginTransmission(slave_address);
+	  Wire.write(reg);
+	  Wire.endTransmission(false);
+	  Wire.requestFrom(slave_address, size);
+	  for (uint16_t i = 0; i < size; i++) {
+		if (Wire.available()) {
+		  buffer[i] = (uint8_t)Wire.read();
+		}
+		else {
+		  return 1;
+		}
+	  }
+	  return 0;
+	}
+
 STM32 HAL I2C example:
 
 .. code-block:: c
@@ -47,6 +69,21 @@ Bus write function's prototype is like this:
 
 This function wants to write ``size`` byte amount of data from ``buffer`` array to bus slave's ``reg`` register which address is ``slave_address``.
 
+Arduino I2C example:
+
+.. code-block:: c
+
+	uint8_t arduino_i2c_write(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size)
+	{
+	  Wire.beginTransmission(slave_address);
+	  Wire.write(reg);
+	  for (uint16_t i = 0; i < size; i++) {
+		Wire.write(buffer[i]);
+	  }
+	  Wire.endTransmission();
+	  return 0;
+	}
+
 STM32 HAL I2C example:
 
 .. code-block:: c
@@ -68,6 +105,15 @@ Delay microseconds functions prototype is like this:
 	void (*delay_ms)(struct mpu925x_t *mpu925x, uint32_t delay);
 
 This functions wants to wait at least ``delay`` microseconds.
+
+Arduino I2C example:
+
+.. code-block:: c
+
+	void arduino_delay_ms(mpu925x_t *mpu925x, uint32_t dly)
+	{
+	  delay(dly);
+	}
 
 STM32 HAL example:
 

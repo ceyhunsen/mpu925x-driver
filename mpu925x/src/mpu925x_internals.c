@@ -33,6 +33,7 @@
 
 /**
  * @brief Initialize accelerometer and gyro.
+ * @param mpu925x Struct that holds sensor data.
  * @returns 0 on success, 1 on failure.
  * */
 uint8_t __mpu925x_init(mpu925x_t *mpu925x)
@@ -69,6 +70,7 @@ uint8_t __mpu925x_init(mpu925x_t *mpu925x)
 
 /**
  * @brief Initialize magnetometer.
+ * @param mpu925x Struct that holds sensor data.
  * @returns 0 on success, 1 on failure.
  * */
 uint8_t __ak8963_init(mpu925x_t *mpu925x)
@@ -108,7 +110,8 @@ uint8_t __ak8963_init(mpu925x_t *mpu925x)
 
 /**
  * @brief Get acceleration bias.
- * @retval None.
+ * @param mpu925x Struct that holds sensor data.
+ * @param bias 3d array which will hold bias values.
  * */
 void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
 {
@@ -124,8 +127,8 @@ void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
 }
 
 /**
- * @brief Write data to bus whilst preserving other bits.
- * This function sucks rn.
+ * @brief Write data to bus whilst preserving other bits (not ready for usage).
+ * @param mpu925x Struct that holds sensor data.
  * */
 void mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size, uint8_t and_sentence)
 {
@@ -141,7 +144,10 @@ void mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8
 
 /**
  * @brief Read data from AK8963 as slave of MPU-925X.
- * It is not yet tested.
+ * @param mpu925x Struct that holds sensor data.
+ * @param read_register Read register.
+ * @param buffer Read data buffer.
+ * @param size Size of the data that will be read.
  * */
 uint8_t ak8963_bus_read(mpu925x_t *mpu925x, uint8_t read_register, uint8_t *buffer, uint8_t size)
 {
@@ -154,7 +160,10 @@ uint8_t ak8963_bus_read(mpu925x_t *mpu925x, uint8_t read_register, uint8_t *buff
 
 /**
  * @brief Write data to AK8963 as a slave of MPU-925X.
- * It is not yet tested.
+ * @param mpu925x Struct that holds sensor data.
+ * @param write_register Write register.
+ * @param Write data buffer.
+ * @param size Size of the data that will be written.
  * */
 uint8_t ak8963_bus_write(mpu925x_t *mpu925x, uint8_t write_register, uint8_t *buffer, uint8_t size)
 {
@@ -178,6 +187,7 @@ uint8_t ak8963_bus_write(mpu925x_t *mpu925x, uint8_t write_register, uint8_t *bu
 
 /**
  * @brief Reset MPU-925X.
+ * @param mpu925x Struct that holds sensor data.
  * */
 void mpu925x_reset(mpu925x_t *mpu925x)
 {
@@ -188,6 +198,7 @@ void mpu925x_reset(mpu925x_t *mpu925x)
 
 /**
  * @brief Reset AK8963.
+ * @param mpu925x Struct that holds sensor data.
  * */
 void ak8963_reset(mpu925x_t *mpu925x)
 {
