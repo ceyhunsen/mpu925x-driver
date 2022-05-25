@@ -4,3 +4,4 @@ docs/build
 tests/build
 *.out
 *.exe
+tests/mpu925x_test.out

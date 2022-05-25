@@ -42,7 +42,7 @@ uint8_t __mpu925x_init(mpu925x_t *mpu925x)
 
 	// WHO_AM_I register should return 0x71 for MPU-9250 and 0x73 for MPU-9255.
 	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, WHO_AM_I, &buffer, 1);
-	if (buffer != 0x71 && buffer != 73)
+	if (buffer != 0x71 && buffer != 0x73)
 		return 1;
 
 	// Enable PLL.
