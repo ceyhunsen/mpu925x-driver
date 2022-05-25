@@ -1,1 +1,6 @@
 docs/build
+*.geany
+*.o
+tests/build
+*.out
+*.exe
