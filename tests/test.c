@@ -4,71 +4,11 @@
  * @brief Test file for MPU-925X driver.
  * */
 
-#include "unity.h"
-#include "mpu925x.h"
-#include "mpu925x_internals.h"
-#include <stdio.h>
-#include <stdint.h>
-#include <string.h>
+#include "test.h"
 
-uint8_t mpuvirtmem[256];
-uint8_t akvirtmem[256];
-
-uint8_t mock_read(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size)
-{
-	if (slave_address == MPU925X_ADDRESS) {
-		for (uint16_t i = 0; i < size; i++) {
-			buffer[i] = mpuvirtmem[reg + i];
-		}
-	}
-	if (slave_address == AK8963_ADDRESS) {
-		for (uint16_t i = 0; i < size; i++) {
-			buffer[i] = akvirtmem[reg + i];
-		}
-	}
-
-	return 0;
-}
-
-uint8_t mock_write(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size)
-{
-	if (slave_address == MPU925X_ADDRESS) {
-		for (uint16_t i = 0; i < size; i++) {
-			mpuvirtmem[reg + i] = buffer[i];
-		}
-	}
-	if (slave_address == AK8963_ADDRESS) {
-		for (uint16_t i = 0; i < size; i++) {
-			akvirtmem[reg + i] = buffer[i];
-		}
-	}
-
-	return 0;
-}
-
-void mock_delay(mpu925x_t *mpu925x, uint32_t delay) {}
-
-// Create mpu925x_t struct instance.
-mpu925x_t mpu925x = {
-	.master_specific = {
-		// Bus functions
-		.bus_read = mock_read,
-		.bus_write = mock_write,
-		.delay_ms = mock_delay
-	},
-
-	.settings = {
-		// Other settings
-		.accelerometer_scale = _2g,
-		.gyroscope_scale = _250dps,
-		.orientation = z_plus
-	}
-};
-
-/*******************************************************************************
- * Tests Start
- ******************************************************************************/
-
+/**
+ * Test mock functions.
+ * */
 void test_mock()
 {
 	uint8_t address = I2C_SLV1_DO;
@@ -87,6 +27,9 @@ void test_mock()
 	TEST_ASSERT_EQUAL(tmp, tmp2);
 }
 
+/**
+ * Test initialization.
+ * */
 void test_init()
 {
 	uint8_t ret = mpu925x_init(&mpu925x, 0);
@@ -94,9 +37,7 @@ void test_init()
 	TEST_ASSERT_EQUAL(ret, 0);
 }
  
-/*******************************************************************************
- * Tests End
- ******************************************************************************/
+//******************************************************************************
 
 void setUp()
 {
