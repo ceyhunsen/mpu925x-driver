@@ -62,9 +62,9 @@ mpu925x_t mpu925x = {
 
 	.settings = {
 		// Other settings
-		.accelerometer_scale = _2g,
-		.gyroscope_scale = _250dps,
-		.orientation = z_plus
+		.accelerometer_scale = mpu925x_2g,
+		.gyroscope_scale = mpu925x_250dps,
+		.orientation = mpu925x_z_plus
 	}
 };
 

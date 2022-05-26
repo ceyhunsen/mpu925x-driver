@@ -154,7 +154,7 @@ void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 	uint8_t buffer[7];
 
 	// Check if data is ready in single measurent mode or self test mode.
-	if (mpu925x->settings.measurement_mode == single_measurement_mode || mpu925x->settings.measurement_mode == self_test_mode) {
+	if (mpu925x->settings.measurement_mode == mpu925x_single_measurement_mode || mpu925x->settings.measurement_mode == mpu925x_self_test_mode) {
 		ak8963_bus_read(mpu925x, ST1, buffer, 1);
 		if ((buffer[0] & 1) != 1) {
 			return;

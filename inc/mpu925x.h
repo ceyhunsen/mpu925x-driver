@@ -38,33 +38,13 @@ extern "C" {
 
 #include <stdint.h>
 
-// FIFO sentence defines.
-#define MPU925X_FIFO_ENABLE_ALL      (0xFF)
-#define MPU925X_FIFO_DISABLE_ALL     (0x00)
-#define MPU925X_FIFO_ENABLE_TEMP     (1 << 7)
-#define MPU925X_FIFO_DISABLE_TEMP    (0 << 7)
-#define MPU925X_FIFO_ENABLE_GYRO_X   (1 << 6)
-#define MPU925X_FIFO_DISABLE_GYRO_X  (0 << 6)
-#define MPU925X_FIFO_ENABLE_GYRO_Y   (1 << 5)
-#define MPU925X_FIFO_DISABLE_GYRO_Y  (0 << 5)
-#define MPU925X_FIFO_ENABLE_GYRO_Z   (1 << 4)
-#define MPU925X_FIFO_DISABLE_GYRO_Z  (0 << 4)
-#define MPU925X_FIFO_ENABLE_ACCEL    (1 << 3)
-#define MPU925X_FIFO_DISABLE_ACCEL   (0 << 3)
-#define MPU925X_FIFO_ENABLE_SLV_2    (1 << 2)
-#define MPU925X_FIFO_DISABLE_SLV_2   (0 << 2)
-#define MPU925X_FIFO_ENABLE_SLV_1    (1 << 1)
-#define MPU925X_FIFO_DISABLE_SLV_1   (0 << 1)
-#define MPU925X_FIFO_ENABLE_SLV_0    (1 << 0)
-#define MPU925X_FIFO_DISABLE_SLV_0   (0 << 0)
-
 /**
  * @enum mpu925x_clock
  * Clock settings for MPU-925X.
  * */
 typedef enum mpu925x_clock {
-	internal_20_hz_clock,
-	auto_select_pll
+	mpu925x_internal_20_hz_clock,
+	mpu925x_auto_select_pll
 } mpu925x_clock;
 
 /**
@@ -72,33 +52,23 @@ typedef enum mpu925x_clock {
  * @brief Orientation of the sensor.
  * */
 typedef enum mpu925x_orientation {
-	x_plus,
-	x_minus,
-	y_plus,
-	y_minus,
-	z_plus,
-	z_minus
+	mpu925x_x_plus,
+	mpu925x_x_minus,
+	mpu925x_y_plus,
+	mpu925x_y_minus,
+	mpu925x_z_plus,
+	mpu925x_z_minus
 } mpu925x_orientation;
-
-/**
- * @enum mpu925x_fifo_mode
- * FIFO operating modes.
- * */
-typedef enum mpu925x_fifo_mode {
-	disabled,
-	overflow_enabled,
-	overflow_disabled
-} mpu925x_fifo_mode;
 
 /**
  * @enum mpu925x_accelerometer_scale
  * @brief Accelerometer full-scale ranges.
  * */
 typedef enum mpu925x_accelerometer_scale {
-	_2g,
-	_4g,
-	_8g,
-	_16g
+	mpu925x_2g,
+	mpu925x_4g,
+	mpu925x_8g,
+	mpu925x_16g
 } mpu925x_accelerometer_scale;
 
 /**
@@ -106,10 +76,10 @@ typedef enum mpu925x_accelerometer_scale {
  * @brief Gyroscope full-scale ranges for gyroscope.
  * */
 typedef enum mpu925x_gyroscope_scale {
-	_250dps,
-	_500dps,
-	_1000dps,
-	_2000dps
+	mpu925x_250dps,
+	mpu925x_500dps,
+	mpu925x_1000dps,
+	mpu925x_2000dps
 } mpu925x_gyroscope_scale;
 
 /**
@@ -117,13 +87,13 @@ typedef enum mpu925x_gyroscope_scale {
  * Measurement modes for AK8963.
  * */
 typedef enum mpu925x_magnetometer_measurement_mode {
-	power_down_mode,
-	single_measurement_mode,
-	continuous_measurement_mode_1,
-	continuous_measurement_mode_2,
-	external_trigger_measurement_mode,
-	self_test_mode,
-	fuse_rom_access_mode
+	mpu925x_power_down_mode,
+	mpu925x_single_measurement_mode,
+	mpu925x_continuous_measurement_mode_1,
+	mpu925x_continuous_measurement_mode_2,
+	mpu925x_external_trigger_measurement_mode,
+	mpu925x_self_test_mode,
+	mpu925x_fuse_rom_access_mode
 } mpu925x_magnetometer_measurement_mode;
 
 /**
@@ -131,15 +101,16 @@ typedef enum mpu925x_magnetometer_measurement_mode {
  * Bit modes for AK8963.
  * */
 typedef enum mpu925x_magnetometer_bit_mode {
-	_14_bit,
-	_16_bit
+	mpu925x_14_bit,
+	mpu925x_16_bit
 } mpu925x_magnetometer_bit_mode;
 
 /**
  * @struct mpu925x_t mpu925x.h mpu925x.h
  * @brief Main struct for MPU-925X driver.
+ * 
  * This structs includes sensor data, driver settings and master spesific
- * handle data, bus and delay function pointers.
+ * handle, bus and delay function pointers.
  * */
 typedef struct mpu925x_t {
 	/**
@@ -197,13 +168,6 @@ void mpu925x_get_temperature(mpu925x_t *mpu925x);
 void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_divider);
 void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock);
 
-// FIFO operations
-void mpu925x_set_fifo_mode(mpu925x_t *mpu925x, mpu925x_fifo_mode mode);
-void mpu925x_set_fifo(mpu925x_t *mpu925x, uint8_t fifo_sentence);
-uint16_t mpu925x_get_fifo_count(mpu925x_t *mpu925x);
-int16_t mpu925x_get_fifo_data(mpu925x_t *mpu925x);
-void mpu925x_clear_fifo(mpu925x_t *mpu925x);
-
 // Accelerometer settings
 void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale);
 void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
@@ -222,6 +186,10 @@ void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset);
 void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode);
 void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode);
 
+// C++ compatibility.
+#ifdef __cplusplus
+extern "C" {
+#endif // __cplusplus
 #ifdef __cplusplus
 }
 #endif // __cplusplus

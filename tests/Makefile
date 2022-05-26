@@ -19,4 +19,6 @@ C_FLAGS = -Og -Wall $(C_INCLUDE)
 
 all:
 	$(CC) $(C_FLAGS) $(C_SOURCE) -o $(TARGET).out
+
+test: all
 	./$(TARGET).out

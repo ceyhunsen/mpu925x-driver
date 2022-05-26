@@ -46,7 +46,7 @@ uint8_t __mpu925x_init(mpu925x_t *mpu925x)
 		return 1;
 
 	// Enable PLL.
-	mpu925x_set_clock_source(mpu925x, auto_select_pll);
+	mpu925x_set_clock_source(mpu925x, mpu925x_auto_select_pll);
 
 	// Enable bypass.
 	buffer = 1 << 1;
@@ -86,10 +86,10 @@ uint8_t __ak8963_init(mpu925x_t *mpu925x)
 	ak8963_reset(mpu925x);
 
 	// Set power down mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, power_down_mode);
+	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_power_down_mode);
 
 	// Enable Fuse ROM access mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, fuse_rom_access_mode);
+	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_fuse_rom_access_mode);
 
 	// Read coefficient data.
 	uint8_t coef_data[3];
@@ -99,11 +99,11 @@ uint8_t __ak8963_init(mpu925x_t *mpu925x)
 	}
 
 	// Set power down mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, power_down_mode);
+	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_power_down_mode);
 
 	// Set measurement and bit mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, continuous_measurement_mode_2);
-	mpu925x_set_magnetometer_bit_mode(mpu925x, _16_bit);
+	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_continuous_measurement_mode_2);
+	mpu925x_set_magnetometer_bit_mode(mpu925x, mpu925x_16_bit);
 
 	return 0;
 }
