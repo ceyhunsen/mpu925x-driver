@@ -59,8 +59,8 @@ void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock)
 		case mpu925x_internal_20_hz_clock:
 			buffer = 0;
 			break;
-		case mpu925x_auto_select_pll:
 		default:
+		case mpu925x_auto_select_pll:
 			buffer = 1;
 			break;
 	}
@@ -82,8 +82,8 @@ void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
 	uint8_t ACCEL_FS_SEL = 0;
 
 	switch (scale) {
-		case mpu925x_2g:
 		default:
+		case mpu925x_2g:
 			ACCEL_FS_SEL = 0 << 3;
 			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_2G;
 			break;
@@ -172,8 +172,8 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
 		case mpu925x_y_minus:
 			average[1] -= mpu925x->settings.acceleration_lsb;
 			break;
-		case mpu925x_z_plus:
 		default:
+		case mpu925x_z_plus:
 			average[2] += mpu925x->settings.acceleration_lsb;
 			break;
 		case mpu925x_z_minus:
@@ -225,6 +225,7 @@ void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale sca
 	uint8_t GYRO_FS_SEL = 0;
 
 	switch (scale) {
+		default:
 		case mpu925x_250dps:
 			GYRO_FS_SEL = 0 << 3;
 			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_250_DPS;
@@ -240,10 +241,6 @@ void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale sca
 		case mpu925x_2000dps:
 			GYRO_FS_SEL = 3 << 3;
 			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_2000_DPS;
-			break;
-		default:
-			GYRO_FS_SEL = 0 << 3;
-			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_250_DPS;
 			break;
 	}
 
@@ -310,6 +307,7 @@ void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
 
 		uint8_t fs_sel = 0;
 		switch(mpu925x->settings.gyroscope_scale) {
+			default:
 			case mpu925x_250dps:
 				fs_sel = 0;
 				break;
@@ -321,9 +319,6 @@ void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
 				break;
 			case mpu925x_2000dps:
 				fs_sel = 3;
-				break;
-			default:
-				fs_sel = 0;
 				break;
 		}
 
@@ -379,6 +374,7 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 		case mpu925x_continuous_measurement_mode_1:
 			buffer |= 0b0010;
 			break;
+		default:
 		case mpu925x_continuous_measurement_mode_2:
 			buffer |= 0b0110;
 			break;
@@ -390,9 +386,6 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 			break;
 		case mpu925x_fuse_rom_access_mode:
 			buffer |= 0b1111;
-			break;
-		default:
-			buffer |= 0b0000;
 			break;
 	}
 
@@ -422,13 +415,10 @@ void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_
 			buffer |= 0 << 4;
 			mpu925x->settings.magnetometer_lsb = MAGNETOMETER_SCALE_14_BIT;
 			break;
+		default:
 		case mpu925x_16_bit:
 			buffer |= 1 << 4;
 			mpu925x->settings.magnetometer_lsb = MAGNETOMETER_SCALE_16_BIT;
-			break;
-		default:
-			mpu925x->settings.magnetometer_lsb = MAGNETOMETER_SCALE_16_BIT;
-			buffer |= 1 << 4;
 			break;
 	}
 

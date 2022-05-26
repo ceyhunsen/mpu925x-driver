@@ -32,10 +32,14 @@
 
 /**
  * @brief Initialize MPU-925X sensor.
+ * @param mpu925x MPU-925X struct pointer.
+ * @param ad0 Last bit of the slave address (depends on ad0 pin connection).
  * @returns 0 on success, 1 on failure on mpu925x, 2 on failure on AK8963.
  * */
 uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 {
+	uint8_t return_value = 0;
+
 	// Set address.
 	mpu925x->settings.address = MPU925X_ADDRESS | (ad0 & 1);
 
@@ -43,11 +47,16 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 	mpu925x_reset(mpu925x);
 
 	// Configure MPU-925X.
-	uint8_t mpu925x_ret = __mpu925x_init(mpu925x);
-	// Configure AK8963.
-	uint8_t ak8963_ret = __ak8963_init(mpu925x);
+	return_value = __mpu925x_init(mpu925x);
+	if (return_value != 0)
+		return 1;
 
-	return (mpu925x_ret != 0)? 1: (ak8963_ret != 0)? 2: 0;
+	// Configure AK8963.
+	return_value = __ak8963_init(mpu925x);
+	if (return_value != 0)
+		return 2;
+
+	return 0;
 }
 
 /**
