@@ -60,98 +60,12 @@ void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock)
 			buffer = 0;
 			break;
 		case auto_select_pll:
-			buffer = 1;
-			break;
 		default:
 			buffer = 1;
 			break;
 	}
 
 	mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, 1, 0b11111000);
-}
-
-/*******************************************************************************
- * FIFO operations
- ******************************************************************************/
-
-/**
- * @brief Set FIFO mode.
- * @param mpu925x Struct that holds sensor data.
- * @param mode FIFO mode.
- * */
-void mpu925x_set_fifo_mode(mpu925x_t *mpu925x, mpu925x_fifo_mode mode)
-{
-	uint8_t buffer;
-
-	switch (mode) {
-		case disabled:
-			buffer = 0 << 6;
-			mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, USER_CTRL, &buffer, 1, ~(1 << 6));
-			break;
-		case overflow_disabled:
-			buffer = 1 << 6;
-			mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, USER_CTRL, &buffer, 1, ~(1 << 6));
-			buffer = 1 << 6;
-			mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, CONFIG, &buffer, 1, ~(1 << 6));
-			break;
-		case overflow_enabled:
-			buffer = 1 << 6;
-			mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, USER_CTRL, &buffer, 1, ~(1 << 6));
-			buffer = 0 << 6;
-			mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, CONFIG, &buffer, 1, ~(1 << 6));
-			break;
-		default:
-			buffer = 0 << 6;
-			mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, USER_CTRL, &buffer, 1, ~(1 << 6));
-			break;
-	}
-}
-
-/**
- * @brief Enable or disable FIFO for specific axis and... things.
- * @param mpu925x Struct that holds sensor data.
- * @param fifo_sentence This sentence will be directly written to FIFO enable register.
- * */
-void mpu925x_set_fifo(mpu925x_t *mpu925x, uint8_t fifo_sentence)
-{
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, FIFO_EN, &fifo_sentence, 1);
-}
-
-/**
- * @brief Get FIFO count.
- * @param mpu925x Struct that holds sensor data.
- * @returns FIFO count.
- * */
-uint16_t mpu925x_get_fifo_count(mpu925x_t *mpu925x)
-{
-	uint8_t buffer[2];
-	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, FIFO_COUNTH, buffer, 2);
-
-	return convert8bitto16bit(buffer[0], buffer[1]);
-}
-
-/**
- * @brief Get FIFO data.
- * @param mpu925x Struct that holds sensor data.
- * @returns 2 byte FIFO data.
- * */
-int16_t mpu925x_get_fifo_data(mpu925x_t *mpu925x)
-{
-	uint8_t buffer[2];
-
-	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, FIFO_R_W, buffer, 2);
-
-	return convert8bitto16bit(buffer[0], buffer[1]);
-}
-
-/**
- * @brief Clear FIFO buffer.
- * @param mpu925x Struct that holds sensor data.
- * */
-void mpu925x_clear_fifo(mpu925x_t *mpu925x)
-{
-	uint8_t buffer = 1 << 2;
-	mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, USER_CTRL, &buffer, 1, ~(1 << 2));
 }
 
 /*******************************************************************************
@@ -169,6 +83,7 @@ void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
 
 	switch (scale) {
 		case _2g:
+		default:
 			ACCEL_FS_SEL = 0 << 3;
 			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_2G;
 			break;
@@ -183,10 +98,6 @@ void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
 		case _16g:
 			ACCEL_FS_SEL = 3 << 3;
 			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_16G;
-			break;
-		default:
-			ACCEL_FS_SEL = 0 << 3;
-			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_2G;
 			break;
 	}
 
@@ -262,13 +173,11 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
 			average[1] -= mpu925x->settings.acceleration_lsb;
 			break;
 		case z_plus:
+		default:
 			average[2] += mpu925x->settings.acceleration_lsb;
 			break;
 		case z_minus:
 			average[2] -= mpu925x->settings.acceleration_lsb;
-			break;
-		default:
-			average[2] += mpu925x->settings.acceleration_lsb;
 			break;
 	}
 
