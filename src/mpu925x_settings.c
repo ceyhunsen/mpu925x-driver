@@ -332,7 +332,7 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 	// Save measurement mode.
 	mpu925x->settings.measurement_mode = measurement_mode;
 
-	ak8963_bus_read(mpu925x, CNTL1, &buffer, 1);
+	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, CNTL1, &buffer, 1);
 	buffer &= 0b11110000;
 
 	switch (measurement_mode) {
@@ -360,7 +360,7 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 			break;
 	}
 
-	ak8963_bus_write(mpu925x, CNTL1, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, CNTL1, &buffer, 1);
 
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }
@@ -378,7 +378,7 @@ void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_
 	// Save bit mode.
 	mpu925x->settings.bit_mode = bit_mode;
 
-	ak8963_bus_read(mpu925x, CNTL1, &buffer, 1);
+	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, CNTL1, &buffer, 1);
 	buffer &= 0b11101111;
 
 	switch (bit_mode) {
@@ -393,7 +393,7 @@ void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_
 			break;
 	}
 
-	ak8963_bus_write(mpu925x, CNTL1, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, CNTL1, &buffer, 1);
 
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }

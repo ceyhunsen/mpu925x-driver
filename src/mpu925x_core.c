@@ -168,7 +168,7 @@ void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 	switch (mpu925x->settings.measurement_mode) {
 		case mpu925x_single_measurement_mode:
 		case mpu925x_self_test_mode:
-			ak8963_bus_read(mpu925x, ST1, buffer, 1);
+			mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, ST1, buffer, 1);
 			if ((buffer[0] & 1) != 1) {
 				return;
 			}
@@ -178,7 +178,7 @@ void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 	}
 
 	// Read raw data and ST2 overflow register.
-	ak8963_bus_read(mpu925x, HXL, buffer, 7);
+	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, HXL, buffer, 7);
 
 	// Check overflow.
 	if ((buffer[6] & 0x08) == 0x08) {

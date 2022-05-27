@@ -33,7 +33,7 @@
 
 /**
  * @brief Initialize accelerometer and gyro.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @returns 0 on success, 1 on failure.
  * */
 uint8_t __mpu925x_init(mpu925x_t *mpu925x)
@@ -70,7 +70,7 @@ uint8_t __mpu925x_init(mpu925x_t *mpu925x)
 
 /**
  * @brief Initialize magnetometer.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @returns 0 on success, 1 on failure.
  * */
 uint8_t __ak8963_init(mpu925x_t *mpu925x)
@@ -78,7 +78,7 @@ uint8_t __ak8963_init(mpu925x_t *mpu925x)
 	uint8_t buffer;
 
 	// Check WIA register. WIA register should return 0x48.
-	ak8963_bus_read(mpu925x, WIA, &buffer, 1);
+	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, WIA, &buffer, 1);
 	if (buffer != 0x48)
 		return 1;
 
@@ -93,7 +93,7 @@ uint8_t __ak8963_init(mpu925x_t *mpu925x)
 
 	// Read coefficient data and save it.
 	uint8_t coef_data[3];
-	ak8963_bus_read(mpu925x, ASAX, coef_data, 3);
+	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, ASAX, coef_data, 3);
 	for (uint8_t i = 0; i < 3; i++) {
 		mpu925x->settings.magnetometer_coefficient[i] = (coef_data[i] - 128) * 0.5 / 128 + 1;
 	}
@@ -110,7 +110,7 @@ uint8_t __ak8963_init(mpu925x_t *mpu925x)
 
 /**
  * @brief Get acceleration bias.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param bias 3d array which will hold bias values.
  * */
 void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
@@ -128,7 +128,7 @@ void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
 
 /**
  * @brief Write data to bus whilst preserving other bits (not ready for usage).
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size, uint8_t and_sentence)
 {
@@ -143,51 +143,8 @@ void mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8
 }
 
 /**
- * @brief Read data from AK8963 as slave of MPU-925X.
- * @param mpu925x Struct that holds sensor data.
- * @param read_register Read register.
- * @param buffer Read data buffer.
- * @param size Size of the data that will be read.
- * */
-uint8_t ak8963_bus_read(mpu925x_t *mpu925x, uint8_t read_register, uint8_t *buffer, uint8_t size)
-{
-	return mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, read_register, buffer, size);
-	//~ uint8_t slave_data[3] = {(1 << 7) | AK8963_ADDRESS, read_register, (1 << 7) | size};
-	//~ mpu925x->master_specific.bus_write(mpu925x, I2C_SLV0_ADDR, slave_data, 3);
-	//~ mpu925x->master_specific.delay_ms(mpu925x, 1);
-	//~ return mpu925x->master_specific.bus_read(mpu925x, EXT_SENS_DATA_00, buffer, size);
-}
-
-/**
- * @brief Write data to AK8963 as a slave of MPU-925X.
- * @param mpu925x Struct that holds sensor data.
- * @param write_register Write register.
- * @param Write data buffer.
- * @param size Size of the data that will be written.
- * */
-uint8_t ak8963_bus_write(mpu925x_t *mpu925x, uint8_t write_register, uint8_t *buffer, uint8_t size)
-{
-	return mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, write_register, buffer, size);
-	//~ uint8_t write_data[2];
-
-	//~ write_data[0] = 0;
-	//~ mpu925x->master_specific.bus_write(mpu925x, I2C_SLV0_CTRL, write_data, 1);
-
-	//~ for (uint16_t i = 0; i < size; i++) {
-		//~ write_data[0] = AK8963_ADDRESS;
-		//~ write_data[1] = write_register + i;
-		//~ mpu925x->master_specific.bus_write(mpu925x, I2C_SLV4_ADDR, write_data, 2);
-		//~ write_data[0] = buffer[i];
-		//~ write_data[1] = 1 << 7;
-		//~ mpu925x->master_specific.bus_write(mpu925x, I2C_SLV4_DO, write_data, 2);
-		//~ mpu925x->master_specific.delay_ms(mpu925x, 1);
-	//~ }
-	//~ return 0;
-}
-
-/**
- * @brief Reset MPU-925X.
- * @param mpu925x Struct that holds sensor data.
+ * @brief Reset MPU-925X sensor.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_reset(mpu925x_t *mpu925x)
 {
@@ -197,12 +154,12 @@ void mpu925x_reset(mpu925x_t *mpu925x)
 }
 
 /**
- * @brief Reset AK8963.
- * @param mpu925x Struct that holds sensor data.
+ * @brief Reset AK8963 sensor.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void ak8963_reset(mpu925x_t *mpu925x)
 {
 	uint8_t buffer = 1;
-	ak8963_bus_write(mpu925x, CNTL2, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, CNTL2, &buffer, 1);
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }
