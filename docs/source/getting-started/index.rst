@@ -6,9 +6,9 @@ Getting Started
 Adding to Your Project
 ^^^^^^^^^^^^^^^^^^^^^^
 
-1. Copy ``mpu925x`` directory to your project's ``drivers`` directory.
-2. Add ``mpu925x/inc`` directory to your toolchain's include path.
-3. Add ``mpu925x/src/mpu925x_core.c``, ``mpu925x/src/mpu925x_settings.c`` and ``mpu925x/src/mpu925x_internals.c`` source files to your project's build toolchain. 
+1. Copy ``mpu925x-driver`` directory to your project's ``drivers`` directory.
+2. Add ``inc`` directory to your toolchain's include path.
+3. Add ``src/mpu925x_core.c``, ``src/mpu925x_settings.c`` and ``src/mpu925x_internals.c`` source files to your project's build toolchain. 
 4. Provide bus handle, bus read, bus write and delay functions depending on your platform (see: :ref:`porting guide<porting-guide>`).
 5. Include ``mpu925x.h`` header to your desired source files.
 
