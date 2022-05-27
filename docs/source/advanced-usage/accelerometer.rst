@@ -52,10 +52,9 @@ One can use these two methods to get and set offset values or call one unified f
 .. doxygenfunction:: mpu925x_accelerometer_offset_cancellation
 	:project: mpu925x-driver
 
-Example code:
-
 .. code-block:: c
+	:caption: Example Code
 
-	mpu925x.settings.orientation = y_plus; // Depends on how sensor is mounted.
+	mpu925x.settings.orientation = mpu925x_y_plus; // Depends on how sensor is mounted.
 	// Sensor must stand still while offset cancellation.
 	mpu925x_accelerometer_offset_cancellation(&mpu925x, 200);

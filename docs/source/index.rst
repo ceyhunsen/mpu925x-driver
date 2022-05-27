@@ -12,20 +12,13 @@ Units
 
 * Acceleration from accelerometer: G
 * Rotation from gyroscope: Degrees per second
-* Magnetic field from magnetometer: Gauss
-* Temperature from thermometer: C degree
+* Magnetic field from magnetometer: Micro Gauss
+* Temperature from thermometer: Celsius degree
 
 Compatibility
 ^^^^^^^^^^^^^
 
 This driver is designed to be portable. So, it can be used on any platform that has a C compiler which supports ``C99`` standart. See :ref:`porting guide<porting-guide>` and ``examples`` directory for more information.
-
-License
-^^^^^^^
-
-This project is licensed under MIT license.
-
-.. literalinclude:: ../../LICENSE
 
 .. toctree::
 	:maxdepth: 3
@@ -36,3 +29,10 @@ This project is licensed under MIT license.
 	porting-guide/index
 	advanced-usage/index
 	api-reference/index
+
+License
+=======
+
+This project is licensed under MIT license.
+
+.. literalinclude:: ../../LICENSE
