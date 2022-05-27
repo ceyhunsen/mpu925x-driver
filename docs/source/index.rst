@@ -18,7 +18,7 @@ Units
 Compatibility
 ^^^^^^^^^^^^^
 
-This driver is designed to be portable. So, it can be used on any platform that has a C compiler which supports ``C99`` standart. See :ref:`porting guide<porting-guide>` and ``examples`` directory for more information.
+This driver is designed to be portable. So, it can be used on any platform that has a C compiler which supports ``C99`` standard. See :ref:`porting guide<porting-guide>` and ``examples`` directory for more information.
 
 .. toctree::
 	:maxdepth: 3

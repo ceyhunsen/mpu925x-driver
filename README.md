@@ -1,11 +1,11 @@
 # Introduction
 
-Portable MPU-925X driver for MPU-9250 and MPU-9255 sensors. See [documentation](#documentation) for more info.
+Platform independent driver for MPU-9250 and MPU-9255 sensors. This driver is written in `C` with `C99` standard.
 
 # Documentation
 
-Documentation is available online. See: [mpu925x-driver.readthedocs.io](https://mpu925x-driver.readthedocs.io/en/latest/). Additionally, one can run `make html` command on `docs` directory to create a local html document.
+Documentation is available online at [mpu925x-driver.readthedocs.io](https://mpu925x-driver.readthedocs.io/en/latest/). Alternatively, local documents can be made with `make html` command in `docs` directory.
 
 # License
 
-[MIT license](LICENSE).
+This project is licensed under [MIT license](LICENSE).
