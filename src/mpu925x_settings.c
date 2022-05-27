@@ -32,12 +32,12 @@
 #include <stdint.h>
 
 /*******************************************************************************
- * General settings
+ * General Settings
  ******************************************************************************/
 
 /**
  * @brief Set sample rate divider.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param sample_rate_divider Sample rate divider sentence.
  * */
 void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_divider)
@@ -47,7 +47,7 @@ void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_div
 
 /**
  * @brief Set clock source.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param clock Clock select option.
  * @see mpu925x_clock
  * */
@@ -74,39 +74,24 @@ void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock)
 
 /**
  * @brief Set accelerometer full-scale range.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param scale Accelerometer full-scale range to be set.
  * */
 void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale)
 {
-	uint8_t ACCEL_FS_SEL = 0;
+	// Get ACCEL_FS_SEL value.
+	uint8_t ACCEL_FS_SEL = scale << 3;
 
-	switch (scale) {
-		default:
-		case mpu925x_2g:
-			ACCEL_FS_SEL = 0 << 3;
-			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_2G;
-			break;
-		case mpu925x_4g:
-			ACCEL_FS_SEL = 1 << 3;
-			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_4G;
-			break;
-		case mpu925x_8g:
-			ACCEL_FS_SEL = 2 << 3;
-			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_8G;
-			break;
-		case mpu925x_16g:
-			ACCEL_FS_SEL = 3 << 3;
-			mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_16G;
-			break;
-	}
+	// Set accelerometer lsb.
+	mpu925x->settings.acceleration_lsb = INT16_MAX / powerof2(scale) / 2 + 1;
 
+	// Write register.
 	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, ACCEL_CONFIG, &ACCEL_FS_SEL, 1);
 }
 
 /**
  * @brief Set accelerometer digital low pass filter setting.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param a_fchoice Accelerometer fchoice bit.
  * @param dlpf Digital low pass filter choice.
  * */
@@ -124,7 +109,7 @@ void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8
 
 /**
  * @brief Get and set accelerometer offset cancellation values.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for acceleration values.
  * @see mpu925x_get_accelerometer_offset
  * @see mpu925x_set_accelerometer_offset
@@ -139,7 +124,7 @@ void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t samp
 
 /**
  * @brief Get accelerometer offset cancellation value.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for acceleration values.
  * @param offset 3d array which will hold accelerometer offset cancellation values.
  * */
@@ -196,7 +181,7 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
 
 /**
  * @brief Set accelerometer offset cancellation value.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param offset 3d array which holds accelerometer offset cancellation values.
  * */
 void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset)
@@ -217,39 +202,38 @@ void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset)
 
 /**
  * @brief Set gyroscope full-scale range.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param scale Gyroscope full-scale range to be set.
  * */
 void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale)
 {
-	uint8_t GYRO_FS_SEL = 0;
+	// Get GYRO_FS_SEL value.
+	uint8_t GYRO_FS_SEL = scale << 3;
 
+	// Set gyrocope scale.
 	switch (scale) {
 		default:
 		case mpu925x_250dps:
-			GYRO_FS_SEL = 0 << 3;
 			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_250_DPS;
 			break;
 		case mpu925x_500dps:
-			GYRO_FS_SEL = 1 << 3;
 			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_500_DPS;
 			break;
 		case mpu925x_1000dps:
-			GYRO_FS_SEL = 2 << 3;
 			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_1000_DPS;
 			break;
 		case mpu925x_2000dps:
-			GYRO_FS_SEL = 3 << 3;
 			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_2000_DPS;
 			break;
 	}
 
+	// Write register.
 	mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, GYRO_CONFIG, &GYRO_FS_SEL, 1, 0b11100111);
 }
 
 /**
  * @brief Set gyroscope digital low pass filter setting.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param g_fchoice Gyroscope f_choice bits.
  * @param dlpf Digital low pass filter setting.
  * */
@@ -268,7 +252,7 @@ void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t d
 
 /**
  * @brief Get and set gyroscope offset cancellation values.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for rotation values.
  * @see mpu925x_get_gyroscope_offset
  * @see mpu925x_set_gyroscope_offset
@@ -283,44 +267,31 @@ void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling
 
 /**
  * @brief Get gyroscope offset cancellation values.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for rotation values.
  * @param offset 3d array which holds gyroscope offset cancellation values.
  * @see mpu925x_set_gyroscope_offset
  * */
 void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
 {
-	// Offsets of x, y and z axis is seperate.
+	// Offsets of x, y and z axis are calculated seperately.
 	for (uint8_t i = 0; i < 3; i++) {
-		// Read rotation data and get average.
-		int16_t fifo_data;
+		int16_t rotation_value;
 		float average = 0.0;
+
+		// Read rotation data and get average.
 		for (uint16_t j = 0; j < sampling_amount; j++) {
 			mpu925x_get_rotation_raw(mpu925x);
-			fifo_data = mpu925x->sensor_data.rotation_raw[i];
+			rotation_value = mpu925x->sensor_data.rotation_raw[i];
 
 			// Avoid overflow.
 			float a = 1.0 / (j + 1.0);
 			float b = 1.0 - a;
-			average = a * fifo_data + b * average;
+			average = a * rotation_value + b * average;
 		}
 
-		uint8_t fs_sel = 0;
-		switch(mpu925x->settings.gyroscope_scale) {
-			default:
-			case mpu925x_250dps:
-				fs_sel = 0;
-				break;
-			case mpu925x_500dps:
-				fs_sel = 1;
-				break;
-			case mpu925x_1000dps:
-				fs_sel = 2;
-				break;
-			case mpu925x_2000dps:
-				fs_sel = 3;
-				break;
-		}
+		// Get FS_SEL value.
+		uint8_t fs_sel = mpu925x->settings.gyroscope_scale;
 
 		offset[i] = (int16_t)(-average / 4.0 * powerof2(fs_sel));
 	}
@@ -328,7 +299,7 @@ void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
 
 /**
  * @brief Set gyroscope offset cancellation values.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param offset 3d array which holds gyroscope offset cancellation values.
  * @see mpu925x_get_gyroscope_offset
  * */
@@ -338,8 +309,8 @@ void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset)
 
 	// Set gyro offset.
 	for (uint8_t i = 0; i < 3; i++) {
-		buffer[0] = (uint8_t)(offset[i] >> 8);
-		buffer[1] = (uint8_t)(offset[i] & 0xFF);
+		buffer[0] = offset[i] >> 8;
+		buffer[1] = offset[i];
 		mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, XG_OFFSET_H + i * 2, buffer, 2);
 	}
 }
@@ -350,7 +321,7 @@ void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset)
 
 /**
  * @brief Set magnetometer measurement mode.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param measurement_mode Measurement mode for magnetometer to be set.
  * @see mpu925x_magnetometer_measurement_mode
  * */
@@ -396,7 +367,7 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 
 /**
  * @brief Set magnetometer bit mode.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @param bit_mode Bit mode for magnetometer to be set.
  * @see mpu925x_magnetometer_bit_mode
  * */

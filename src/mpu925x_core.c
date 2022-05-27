@@ -61,6 +61,7 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 
 /**
  * @brief Get all sensor data at once.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_get_all(mpu925x_t *mpu925x)
 {
@@ -72,6 +73,7 @@ void mpu925x_get_all(mpu925x_t *mpu925x)
 
 /**
  * @brief Get all raw sensor data at once.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_get_all_raw(mpu925x_t *mpu925x)
 {
@@ -83,7 +85,7 @@ void mpu925x_get_all_raw(mpu925x_t *mpu925x)
 
 /**
  * @brief Get acceleration in G's.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @see mpu925x_get_acceleration_raw
  * */
 void mpu925x_get_acceleration(mpu925x_t *mpu925x)
@@ -97,7 +99,7 @@ void mpu925x_get_acceleration(mpu925x_t *mpu925x)
 
 /**
  * @brief Get raw acceleration data.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @see mpu925x_get_acceleration
  * */
 void mpu925x_get_acceleration_raw(mpu925x_t *mpu925x)
@@ -113,7 +115,7 @@ void mpu925x_get_acceleration_raw(mpu925x_t *mpu925x)
 
 /**
  * @brief Get rotation in degrees per second.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @see mpu925x_get_rotation_raw
  * */
 void mpu925x_get_rotation(mpu925x_t *mpu925x)
@@ -127,7 +129,7 @@ void mpu925x_get_rotation(mpu925x_t *mpu925x)
 
 /**
  * @brief Get raw rotation data.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * @see mpu925x_get_rotation
  * */
 void mpu925x_get_rotation_raw(mpu925x_t *mpu925x)
@@ -142,7 +144,7 @@ void mpu925x_get_rotation_raw(mpu925x_t *mpu925x)
 
 /**
  * @brief Get magnetic field in micro Gauss.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_get_magnetic_field(mpu925x_t *mpu925x)
 {
@@ -156,18 +158,23 @@ void mpu925x_get_magnetic_field(mpu925x_t *mpu925x)
 
 /**
  * @brief Get raw magnetic field data.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 {
 	uint8_t buffer[7];
 
 	// Check if data is ready in single measurent mode or self test mode.
-	if (mpu925x->settings.measurement_mode == mpu925x_single_measurement_mode || mpu925x->settings.measurement_mode == mpu925x_self_test_mode) {
-		ak8963_bus_read(mpu925x, ST1, buffer, 1);
-		if ((buffer[0] & 1) != 1) {
-			return;
-		}
+	switch (mpu925x->settings.measurement_mode) {
+		case mpu925x_single_measurement_mode:
+		case mpu925x_self_test_mode:
+			ak8963_bus_read(mpu925x, ST1, buffer, 1);
+			if ((buffer[0] & 1) != 1) {
+				return;
+			}
+			break;
+		default:
+			break;
 	}
 
 	// Read raw data and ST2 overflow register.
@@ -184,8 +191,8 @@ void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 }
 
 /**
- * @brief Get temperature in C degree.
- * @param mpu925x Struct that holds sensor data.
+ * @brief Get temperature in celsius degree.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_get_temperature(mpu925x_t *mpu925x)
 {
@@ -197,7 +204,7 @@ void mpu925x_get_temperature(mpu925x_t *mpu925x)
 
 /**
  * @brief Get raw temperature data.
- * @param mpu925x Struct that holds sensor data.
+ * @param mpu925x MPU-925X struct pointer.
  * */
 void mpu925x_get_temperature_raw(mpu925x_t *mpu925x)
 {

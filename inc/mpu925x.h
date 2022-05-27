@@ -43,7 +43,7 @@ extern "C" {
  * Clock settings for MPU-925X.
  * */
 typedef enum mpu925x_clock {
-	mpu925x_internal_20_hz_clock,
+	mpu925x_internal_20_hz_clock = 0,
 	mpu925x_auto_select_pll
 } mpu925x_clock;
 
@@ -52,7 +52,7 @@ typedef enum mpu925x_clock {
  * @brief Orientation of the sensor.
  * */
 typedef enum mpu925x_orientation {
-	mpu925x_x_plus,
+	mpu925x_x_plus = 0,
 	mpu925x_x_minus,
 	mpu925x_y_plus,
 	mpu925x_y_minus,
@@ -65,7 +65,7 @@ typedef enum mpu925x_orientation {
  * @brief Accelerometer full-scale ranges.
  * */
 typedef enum mpu925x_accelerometer_scale {
-	mpu925x_2g,
+	mpu925x_2g = 0,
 	mpu925x_4g,
 	mpu925x_8g,
 	mpu925x_16g
@@ -76,7 +76,7 @@ typedef enum mpu925x_accelerometer_scale {
  * @brief Gyroscope full-scale ranges for gyroscope.
  * */
 typedef enum mpu925x_gyroscope_scale {
-	mpu925x_250dps,
+	mpu925x_250dps = 0,
 	mpu925x_500dps,
 	mpu925x_1000dps,
 	mpu925x_2000dps
@@ -87,7 +87,7 @@ typedef enum mpu925x_gyroscope_scale {
  * Measurement modes for AK8963.
  * */
 typedef enum mpu925x_magnetometer_measurement_mode {
-	mpu925x_power_down_mode,
+	mpu925x_power_down_mode = 0,
 	mpu925x_single_measurement_mode,
 	mpu925x_continuous_measurement_mode_1,
 	mpu925x_continuous_measurement_mode_2,
@@ -101,7 +101,7 @@ typedef enum mpu925x_magnetometer_measurement_mode {
  * Bit modes for AK8963.
  * */
 typedef enum mpu925x_magnetometer_bit_mode {
-	mpu925x_14_bit,
+	mpu925x_14_bit = 0,
 	mpu925x_16_bit
 } mpu925x_magnetometer_bit_mode;
 

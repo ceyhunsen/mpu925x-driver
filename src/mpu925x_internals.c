@@ -91,7 +91,7 @@ uint8_t __ak8963_init(mpu925x_t *mpu925x)
 	// Enable Fuse ROM access mode.
 	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_fuse_rom_access_mode);
 
-	// Read coefficient data.
+	// Read coefficient data and save it.
 	uint8_t coef_data[3];
 	ak8963_bus_read(mpu925x, ASAX, coef_data, 3);
 	for (uint8_t i = 0; i < 3; i++) {
@@ -191,7 +191,7 @@ uint8_t ak8963_bus_write(mpu925x_t *mpu925x, uint8_t write_register, uint8_t *bu
  * */
 void mpu925x_reset(mpu925x_t *mpu925x)
 {
-	uint8_t buffer = 0b10000000;
+	uint8_t buffer = 1 << 7;
 	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, 1);
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }
