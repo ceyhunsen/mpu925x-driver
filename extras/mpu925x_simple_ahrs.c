@@ -32,7 +32,7 @@
 #include <math.h>
 
 /**
- * @brief Get pitch and roll angels.
+ * @brief Get pitch and roll angles.
  * @param mpu925x MPU-925X struct pointer.
  * @param ahrs Simple AHRS struct pointer.
  * */
