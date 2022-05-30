@@ -58,9 +58,9 @@ int main()
 
 		.settings = {
 			// Other settings
-			.accelerometer_scale = _2g,
-			.gyroscope_scale = _250dps,
-			.orientation = z_minus
+			.accelerometer_scale = mpu925x_2g,
+			.gyroscope_scale = mpu925x_250dps,
+			.orientation = mpu925x_z_minus
 		}
 	};
 

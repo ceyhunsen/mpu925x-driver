@@ -12,4 +12,4 @@ Advanced Usage
 	accelerometer
 	gyroscope
 	magnetometer
-	fifo
+	extras

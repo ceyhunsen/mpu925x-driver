@@ -49,9 +49,6 @@ void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias);
 
 void mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size, uint8_t and_sentence);
 
-uint8_t ak8963_bus_read(mpu925x_t *mpu925x, uint8_t read_register, uint8_t *buffer, uint8_t size);
-uint8_t ak8963_bus_write(mpu925x_t *mpu925x, uint8_t write_register, uint8_t *buffer, uint8_t size);
-
 #define convert8bitto16bit(x, y)   (((x) << 8) | (y))
 #define powerof2(x)                (1 << (x))
 

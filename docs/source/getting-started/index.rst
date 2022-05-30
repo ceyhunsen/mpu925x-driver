@@ -11,6 +11,7 @@ Adding to Your Project
 3. Add ``src/mpu925x_core.c``, ``src/mpu925x_settings.c`` and ``src/mpu925x_internals.c`` source files to your project's build toolchain. 
 4. Provide bus handle, bus read, bus write and delay functions depending on your platform (see: :ref:`porting guide<porting-guide>`).
 5. Include ``mpu925x.h`` header to your desired source files.
+6. [EXTRAS] Extra modules can be compiled with program if any of the extra functionalities needed. Extra modules are located in ``extras`` directory.
 
 Simple Usage
 ^^^^^^^^^^^^
