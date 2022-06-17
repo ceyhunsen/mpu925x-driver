@@ -109,7 +109,7 @@ typedef enum mpu925x_magnetometer_bit_mode {
  * @struct mpu925x_t mpu925x.h mpu925x.h
  * @brief Main struct for MPU-925X driver.
  * 
- * This structs includes sensor data, driver settings and master spesific
+ * This structs includes sensor data, driver settings and master specific
  * handle, bus and delay function pointers.
  * */
 typedef struct mpu925x_t {
@@ -139,7 +139,7 @@ typedef struct mpu925x_t {
 
 	/**
 	 * @struct master_specific
-	 * @brief Holds master spesific pointers.
+	 * @brief Holds master specific pointers.
 	 * */
 	struct master_specific {
 		uint8_t (*bus_read)(struct mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size);
@@ -187,9 +187,6 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode);
 
 // C++ compatibility.
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
 #ifdef __cplusplus
 }
 #endif // __cplusplus
