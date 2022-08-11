@@ -18,7 +18,7 @@ void test_mock()
 
 	mpu925x.master_specific.bus_write(&mpu925x, MPU925X_ADDRESS, address, &tmp, 1);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[address], tmp);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[address], tmp);
 
 	uint8_t tmp2 = 11;
 
@@ -43,22 +43,22 @@ void test_accelerometer_scale()
 {
 	mpu925x_set_accelerometer_scale(&mpu925x, mpu925x_8g);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[ACCEL_CONFIG], 0b10 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 0b10 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.acceleration_lsb, ACCELEROMETER_SCALE_8G);
 
 	mpu925x_set_accelerometer_scale(&mpu925x, mpu925x_2g);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[ACCEL_CONFIG], 0b00 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 0b00 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.acceleration_lsb, ACCELEROMETER_SCALE_2G);
 
 	mpu925x_set_accelerometer_scale(&mpu925x, mpu925x_16g);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[ACCEL_CONFIG], 0b11 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 0b11 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.acceleration_lsb, ACCELEROMETER_SCALE_16G);
 
 	mpu925x_set_accelerometer_scale(&mpu925x, mpu925x_4g);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[ACCEL_CONFIG], 0b01 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 0b01 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.acceleration_lsb, ACCELEROMETER_SCALE_4G);
 }
 
@@ -66,22 +66,22 @@ void test_gyroscope_scale()
 {
 	mpu925x_set_gyroscope_scale(&mpu925x, mpu925x_250dps);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[GYRO_CONFIG], 0b00 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[GYRO_CONFIG], 0b00 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.gyroscope_lsb, GYROSCOPE_SCALE_250_DPS);
 
 	mpu925x_set_gyroscope_scale(&mpu925x, mpu925x_500dps);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[GYRO_CONFIG], 0b01 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[GYRO_CONFIG], 0b01 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.gyroscope_lsb, GYROSCOPE_SCALE_500_DPS);
 
 	mpu925x_set_gyroscope_scale(&mpu925x, mpu925x_1000dps);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[GYRO_CONFIG], 0b10 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[GYRO_CONFIG], 0b10 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.gyroscope_lsb, GYROSCOPE_SCALE_1000_DPS);
 
 	mpu925x_set_gyroscope_scale(&mpu925x, mpu925x_2000dps);
 
-	TEST_ASSERT_EQUAL(mpuvirtmem[GYRO_CONFIG], 0b11 << 3);
+	TEST_ASSERT_EQUAL(mpu_virt_mem[GYRO_CONFIG], 0b11 << 3);
 	TEST_ASSERT_EQUAL(mpu925x.settings.gyroscope_lsb, GYROSCOPE_SCALE_2000_DPS);
 }
 
@@ -103,20 +103,20 @@ void test_sensor_values()
 
 void setUp()
 {
-	memset(mpuvirtmem, 0, sizeof(mpuvirtmem));
+	memset(mpu_virt_mem, 0, sizeof(mpu_virt_mem));
 	// Set WHO_AM_I register.
-	mpuvirtmem[WHO_AM_I] = 0x73;
+	mpu_virt_mem[WHO_AM_I] = 0x73;
 	// Set default sensor values.
-	mpuvirtmem[ACCEL_XOUT_L] = 0xFF;
-	mpuvirtmem[ACCEL_YOUT_L] = 0xFF;
-	mpuvirtmem[ACCEL_ZOUT_L] = 0xFF;
-	mpuvirtmem[GYRO_XOUT_L] = 0xFF;
-	mpuvirtmem[GYRO_YOUT_L] = 0xFF;
-	mpuvirtmem[GYRO_ZOUT_L] = 0xFF;
+	mpu_virt_mem[ACCEL_XOUT_L] = 0xFF;
+	mpu_virt_mem[ACCEL_YOUT_L] = 0xFF;
+	mpu_virt_mem[ACCEL_ZOUT_L] = 0xFF;
+	mpu_virt_mem[GYRO_XOUT_L] = 0xFF;
+	mpu_virt_mem[GYRO_YOUT_L] = 0xFF;
+	mpu_virt_mem[GYRO_ZOUT_L] = 0xFF;
 
-	memset(akvirtmem, 0, sizeof(akvirtmem));
+	memset(ak_virt_mem, 0, sizeof(ak_virt_mem));
 	// Set WIA register.
-	akvirtmem[WIA] = 0x48;
+	ak_virt_mem[WIA] = 0x48;
 }
 
 void tearDown()
