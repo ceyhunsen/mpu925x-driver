@@ -1,14 +1,6 @@
 # Makefile for MPU-925X driver tests.
 # Author: Ceyhun Şen
 
-# All tests must have a .c file in its exact name.
-TESTS = \
-accelerometer \
-gyroscope \
-magnetometer \
-
-# The rest of the file should not be touched.
-
 CC = gcc
 
 BUILD_DIR = build
@@ -25,9 +17,25 @@ C_INCLUDE = \
 
 C_FLAGS = -O2 -Wall $(C_INCLUDE)
 
-all: mock $(TESTS) clean
+# All tests must have a .c file in its exact name.
+TESTS = \
+accelerometer \
+gyroscope \
+magnetometer \
+
+all: mock core settings $(TESTS) clean
 
 mock:
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $(BUILD_DIR)/$@.out
+	$(BUILD_DIR)/$@.out
+
+core:
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $(BUILD_DIR)/$@.out
+	$(BUILD_DIR)/$@.out
+
+settings:
 	mkdir -p $(BUILD_DIR)
 	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $(BUILD_DIR)/$@.out
 	$(BUILD_DIR)/$@.out
