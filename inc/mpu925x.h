@@ -183,9 +183,6 @@ void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_
 
 // C++ compatibility.
 #ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-#ifdef __cplusplus
 }
 #endif // __cplusplus
 
