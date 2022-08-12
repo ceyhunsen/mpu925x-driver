@@ -1,9 +1,8 @@
 # Compilation files
-*.o
 tests/build
+*.o
 *.out
 *.exe
-tests/mpu925x_test.out
 
 # Documentation
 docs/build
