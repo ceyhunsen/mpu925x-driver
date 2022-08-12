@@ -1,7 +1,12 @@
-docs/build
-*.geany
-*.o
+# Compilation files
 tests/build
+*.o
 *.out
 *.exe
-tests/mpu925x_test.out
+
+# Documentation
+docs/build
+
+# Editors
+*.geany
+.vscode
