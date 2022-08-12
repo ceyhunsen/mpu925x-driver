@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file mpu925x_internals.c
  * @author Ceyhun Şen
  * @brief Internal functions for MPU-925X driver.
  * */

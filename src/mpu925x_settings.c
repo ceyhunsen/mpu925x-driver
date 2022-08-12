@@ -1,5 +1,5 @@
 /**
- * @file
+ * @file mpu925x_settings.c
  * @author Ceyhun Şen
  * @brief Settings for MPU-925X driver.
  * */
