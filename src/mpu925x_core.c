@@ -25,6 +25,9 @@
 
 #include "mpu925x_internals.h"
 
+static void mpu925x_reset(mpu925x_t *mpu925x);
+static void ak8963_reset(mpu925x_t *mpu925x);
+
 /**
  * @brief Initialize MPU-925X sensor.
  * @param mpu925x MPU-925X struct pointer.
@@ -33,23 +36,34 @@
  * */
 uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 {
-	uint8_t return_value = 0;
+	uint8_t buffer = 0;
 
 	// Set address.
 	mpu925x->settings.address = MPU925X_ADDRESS | (ad0 & 1);
 
+	// WHO_AM_I register should return 0x71 for MPU-9250 and 0x73 for MPU-9255.
+	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, WHO_AM_I, &buffer, 1);
+	if (buffer != 0x71 && buffer != 0x73)
+		return 1;
+
 	// Reset sensor.
 	mpu925x_reset(mpu925x);
 
-	// Configure MPU-925X.
-	return_value = __mpu925x_init(mpu925x);
-	if (return_value != 0)
+	// Enable bypass.
+	buffer = 1 << 1;
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, INT_PIN_CFG, &buffer, 1);
+
+	// Disable I2C master mode.
+	buffer = 0 << 5;
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, USER_CTRL, &buffer, 1);
+
+	// WIA register should return 0x48 for AK8963.
+	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, WIA, &buffer, 1);
+	if (buffer != 0x48)
 		return 1;
 
-	// Configure AK8963.
-	return_value = __ak8963_init(mpu925x);
-	if (return_value != 0)
-		return 2;
+	// Reset AK8963.
+	ak8963_reset(mpu925x);
 
 	return 0;
 }
@@ -208,4 +222,26 @@ void mpu925x_get_temperature_raw(mpu925x_t *mpu925x)
 	// Read raw temperature data.
 	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, TEMP_OUT_H, buffer, 2);
 	mpu925x->sensor_data.temperature_raw = convert8bitto16bit(buffer[0], buffer[1]);
+}
+
+/**
+ * @brief Reset MPU-925X sensor.
+ * @param mpu925x MPU-925X struct pointer.
+ * */
+static void mpu925x_reset(mpu925x_t *mpu925x)
+{
+	uint8_t buffer = 1 << 7;
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, 1);
+	mpu925x->master_specific.delay_ms(mpu925x, 100);
+}
+
+/**
+ * @brief Reset AK8963 sensor.
+ * @param mpu925x MPU-925X struct pointer.
+ * */
+static void ak8963_reset(mpu925x_t *mpu925x)
+{
+	uint8_t buffer = 1;
+	mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, CNTL2, &buffer, 1);
+	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }

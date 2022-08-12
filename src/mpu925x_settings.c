@@ -60,7 +60,7 @@ void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock)
 			break;
 	}
 
-	mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, 1, 0b11111000);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, 1);
 }
 
 /*******************************************************************************
@@ -100,7 +100,7 @@ void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale sca
 	}
 
 	// Write register.
-	mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, GYRO_CONFIG, &GYRO_FS_SEL, 1, 0b11100111);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, GYRO_CONFIG, &GYRO_FS_SEL, 1);
 }
 
 /**
@@ -115,11 +115,11 @@ void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t d
 
 	// Get bypass value.
 	buffer = ~g_fchoice & 0b11;
-	mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, GYRO_CONFIG, &buffer, 1, 0b11111100);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, GYRO_CONFIG, &buffer, 1);
 
 	// Set dlpf.
 	buffer = dlpf & 0b111;
-	mpu925x_bus_write_preserve(mpu925x, mpu925x->settings.address, CONFIG, &buffer, 1, 0b11111000);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, CONFIG, &buffer, 1);
 }
 
 /**

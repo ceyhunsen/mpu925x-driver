@@ -26,6 +26,24 @@
 #include "mpu925x_internals.h"
 
 /**
+ * @brief Get acceleration bias.
+ * @param mpu925x MPU-925X struct pointer.
+ * @param bias 3d array which will hold bias values.
+ * */
+static void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
+{
+	uint8_t buffer[8];
+
+	// Read bias registers.
+	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, XA_OFFSET_H, buffer, 8);
+
+	// Convert them to 16 bit.
+	for (uint8_t i = 0; i < 3; i++) {
+		bias[i] = convert8bitto16bit(buffer[i * 3], buffer[i * 3 + 1]);
+	}
+}
+
+/**
  * @brief Set accelerometer full-scale range.
  * @param mpu925x MPU-925X struct pointer.
  * @param scale Accelerometer full-scale range to be set.
