@@ -17,6 +17,7 @@ Unity/src/unity.c \
 ../src/mpu925x_core.c \
 ../src/mpu925x_internals.c \
 ../src/mpu925x_settings.c \
+../src/mpu925x_accelerometer.c \
 
 C_INCLUDE = \
 -I../inc \
