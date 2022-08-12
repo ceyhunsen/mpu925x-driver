@@ -4,6 +4,8 @@
 # All tests must have a .c file in its exact name.
 TESTS = \
 accelerometer \
+gyroscope \
+magnetometer \
 
 # The rest of the file should not be touched.
 
