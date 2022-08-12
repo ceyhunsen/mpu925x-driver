@@ -1,15 +1,16 @@
 # Makefile for MPU-925X driver tests.
 # Author: Ceyhun Şen
 
+# All tests must have a .c file in its exact name.
+TESTS = \
+mock \
+accelerometer \
+
+# The rest of the file should not be touched.
+
 CC = gcc
 
-# TARGET = mpu925x_test
-# C_SOURCE = \
-# test.c \
-# ../src/mpu925x_core.c \
-# ../src/mpu925x_internals.c \
-# ../src/mpu925x_settings.c \
-# Unity/src/unity.c
+BUILD_DIR = build
 
 C_SOURCES = \
 Unity/src/unity.c \
@@ -24,17 +25,14 @@ C_INCLUDE = \
 
 C_FLAGS = -O2 -Wall $(C_INCLUDE)
 
-mock:
-	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $@.out
-	./$@.out
+all: $(TESTS) clean
 
-accelerometer:
-	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $@.out
-	./$@.out
+%:
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $(BUILD_DIR)/$@.out
+	$(BUILD_DIR)/$@.out
 
-all:
-	$(CC) $(C_FLAGS) $(C_SOURCE) -o $(TARGET).out
-	size $(TARGET).out
+.PHONY: clean
 
-test: all
-	./$(TARGET).out
+clean:
+	rm -rf $(BUILD_DIR) *.out *.o *.exe
