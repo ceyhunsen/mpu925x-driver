@@ -194,7 +194,7 @@ void mpu925x_get_temperature(mpu925x_t *mpu925x)
 	mpu925x_get_temperature_raw(mpu925x);
 
 	// Calculate temperature in celsius.
-	mpu925x->sensor_data.temperature = ((mpu925x->sensor_data.temperature_raw - 0) / mpu925x->settings.temperature_lsb) + 21;
+	mpu925x->sensor_data.temperature = ((mpu925x->sensor_data.temperature_raw - 0) / TEMPERATURE_SCALE) + 21;
 }
 
 /**

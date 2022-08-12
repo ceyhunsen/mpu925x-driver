@@ -127,7 +127,7 @@ typedef struct mpu925x_t {
 		mpu925x_gyroscope_scale gyroscope_scale;
 		mpu925x_magnetometer_measurement_mode measurement_mode;
 		mpu925x_magnetometer_bit_mode bit_mode;
-		float acceleration_lsb, gyroscope_lsb, magnetometer_lsb, temperature_lsb;
+		float acceleration_lsb, gyroscope_lsb, magnetometer_lsb;
 		float magnetometer_coefficient[3];
 		uint8_t address;
 	} settings;

@@ -58,7 +58,7 @@ uint8_t __mpu925x_init(mpu925x_t *mpu925x)
 	mpu925x_set_gyroscope_scale(mpu925x, mpu925x->settings.gyroscope_scale);
 
 	// Set temperature lsb.
-	mpu925x->settings.temperature_lsb = TEMPERATURE_SCALE;
+	// mpu925x->settings.temperature_lsb = TEMPERATURE_SCALE;
 
 	return 0;
 }
