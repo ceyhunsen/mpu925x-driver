@@ -112,13 +112,9 @@ void setUp()
 	mpu_virt_mem[WHO_AM_I] = 0x73;
 	ak_virt_mem[WIA] = 0x48;
 
-	// Set default sensor values.
-	mpu_virt_mem[ACCEL_XOUT_L] = 0xFF;
-	mpu_virt_mem[ACCEL_YOUT_L] = 0xFF;
-	mpu_virt_mem[ACCEL_ZOUT_L] = 0xFF;
-	mpu_virt_mem[GYRO_XOUT_L] = 0xFF;
-	mpu_virt_mem[GYRO_YOUT_L] = 0xFF;
-	mpu_virt_mem[GYRO_ZOUT_L] = 0xFF;
+	// Set accelerometer values.
+	mpu_virt_mem[ACCEL_ZOUT_L] = ACCELEROMETER_SCALE_2G & 0xFF;
+	mpu_virt_mem[ACCEL_ZOUT_H] = ACCELEROMETER_SCALE_2G >> 8;
 }
 
 /**

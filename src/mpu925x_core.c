@@ -61,6 +61,12 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 	// Reset AK8963.
 	ak8963_reset(mpu925x);
 
+	// Set acceleration range.
+	mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_2G;
+
+	// Set gyro range.
+	mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_250_DPS;
+
 	return 0;
 }
 
