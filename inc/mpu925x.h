@@ -144,10 +144,8 @@ typedef struct mpu925x_t {
 	} master_specific;
 } mpu925x_t;
 
-// Core
+// Core functionalities.
 uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0);
-
-// Sensor data
 void mpu925x_get_all_raw(mpu925x_t *mpu925x);
 void mpu925x_get_all(mpu925x_t *mpu925x);
 void mpu925x_get_acceleration_raw(mpu925x_t *mpu925x);
@@ -159,25 +157,25 @@ void mpu925x_get_magnetic_field(mpu925x_t *mpu925x);
 void mpu925x_get_temperature_raw(mpu925x_t *mpu925x);
 void mpu925x_get_temperature(mpu925x_t *mpu925x);
 
-// General settings
+// General settings.
 void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_divider);
 void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock);
 
-// Accelerometer settings
+// Accelerometer settings.
 void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale);
 void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
 void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount);
 void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
 void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset);
 
-// Gyroscope settings
+// Gyroscope settings.
 void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale);
 void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
 void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount);
 void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
 void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset);
 
-// Magnetometer settings
+// Magnetometer settings.
 void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode);
 void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode);
 
