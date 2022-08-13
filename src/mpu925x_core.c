@@ -39,10 +39,10 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 	uint8_t buffer = 0;
 
 	// Set address.
-	mpu925x->settings.address = MPU925X_ADDRESS | (ad0 & 1);
+	mpu925x->settings.general.address = MPU925X_ADDRESS | (ad0 & 1);
 
 	// WHO_AM_I register should return 0x71 for MPU-9250 and 0x73 for MPU-9255.
-	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, WHO_AM_I, &buffer, 1);
+	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, WHO_AM_I, &buffer, 1);
 	if (buffer != 0x71 && buffer != 0x73)
 		return 1;
 
@@ -51,7 +51,7 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 
 	// Enable bypass.
 	buffer = 1 << 1;
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, INT_PIN_CFG, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, INT_PIN_CFG, &buffer, 1);
 
 	// WIA register should return 0x48 for AK8963.
 	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, WIA, &buffer, 1);
@@ -62,10 +62,10 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 	ak8963_reset(mpu925x);
 
 	// Set acceleration range.
-	mpu925x->settings.acceleration_lsb = ACCELEROMETER_SCALE_2G;
+	mpu925x->settings.accelerometer.lsb = ACCELEROMETER_SCALE_2G;
 
 	// Set gyro range.
-	mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_250_DPS;
+	mpu925x->settings.gyroscope.lsb = GYROSCOPE_SCALE_250_DPS;
 
 	return 0;
 }
@@ -104,7 +104,7 @@ void mpu925x_get_acceleration(mpu925x_t *mpu925x)
 	mpu925x_get_acceleration_raw(mpu925x);
 
 	for (uint8_t i = 0; i < 3; i++) {
-		mpu925x->sensor_data.acceleration[i] = mpu925x->sensor_data.acceleration_raw[i] / mpu925x->settings.acceleration_lsb;
+		mpu925x->sensor_data.acceleration[i] = mpu925x->sensor_data.acceleration_raw[i] / mpu925x->settings.accelerometer.lsb;
 	}
 }
 
@@ -118,7 +118,7 @@ void mpu925x_get_acceleration_raw(mpu925x_t *mpu925x)
 	uint8_t buffer[6];
 
 	// Read raw acceleration data.
-	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, ACCEL_XOUT_H, buffer, 6);
+	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, ACCEL_XOUT_H, buffer, 6);
 	for (uint8_t i = 0; i < 3; i++) {
 		mpu925x->sensor_data.acceleration_raw[i] = convert8bitto16bit(buffer[i * 2], buffer[i * 2 + 1]);
 	}
@@ -134,7 +134,7 @@ void mpu925x_get_rotation(mpu925x_t *mpu925x)
 	mpu925x_get_rotation_raw(mpu925x);
 
 	for (uint8_t i = 0; i < 3; i++) {
-		mpu925x->sensor_data.rotation[i] = mpu925x->sensor_data.rotation_raw[i] / mpu925x->settings.gyroscope_lsb;
+		mpu925x->sensor_data.rotation[i] = mpu925x->sensor_data.rotation_raw[i] / mpu925x->settings.gyroscope.lsb;
 	}
 }
 
@@ -147,7 +147,7 @@ void mpu925x_get_rotation_raw(mpu925x_t *mpu925x)
 {
 	uint8_t buffer[6];
 
-	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, GYRO_XOUT_H, buffer, 6);
+	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, GYRO_XOUT_H, buffer, 6);
 	for (uint8_t i = 0; i < 3; i++) {
 		mpu925x->sensor_data.rotation_raw[i] = convert8bitto16bit(buffer[i * 2], buffer[i * 2 + 1]);
 	}
@@ -163,7 +163,7 @@ void mpu925x_get_magnetic_field(mpu925x_t *mpu925x)
 
 	// Calculate magnetic_field data in micro Gauss.
 	for (uint8_t i = 0; i < 3; i++) {
-		mpu925x->sensor_data.magnetic_field[i] = mpu925x->sensor_data.magnet_raw[i] * mpu925x->settings.magnetometer_lsb * mpu925x->settings.magnetometer_coefficient[i];
+		mpu925x->sensor_data.magnetic_field[i] = mpu925x->sensor_data.magnet_raw[i] * mpu925x->settings.magnetometer.lsb * mpu925x->settings.magnetometer.coefficient[i];
 	}
 }
 
@@ -176,7 +176,7 @@ void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 	uint8_t buffer[7];
 
 	// Check if data is ready in single measurent mode or self test mode.
-	switch (mpu925x->settings.measurement_mode) {
+	switch (mpu925x->settings.magnetometer.measurement_mode) {
 		case mpu925x_single_measurement_mode:
 		case mpu925x_self_test_mode:
 			mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, ST1, buffer, 1);
@@ -222,7 +222,7 @@ void mpu925x_get_temperature_raw(mpu925x_t *mpu925x)
 	uint8_t buffer[2];
 
 	// Read raw temperature data.
-	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, TEMP_OUT_H, buffer, 2);
+	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, TEMP_OUT_H, buffer, 2);
 	mpu925x->sensor_data.temperature_raw = convert8bitto16bit(buffer[0], buffer[1]);
 }
 
@@ -233,7 +233,7 @@ void mpu925x_get_temperature_raw(mpu925x_t *mpu925x)
 static void mpu925x_reset(mpu925x_t *mpu925x)
 {
 	uint8_t buffer = 1 << 7;
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, sizeof buffer);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, PWR_MGMT_1, &buffer, sizeof buffer);
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }
 

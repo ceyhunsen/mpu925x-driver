@@ -94,8 +94,9 @@ mpu925x_t mpu925x = {
 	},
 
 	.settings = {
-		// Other settings
-		.orientation = mpu925x_z_plus
+		.general = {
+			.orientation = mpu925x_z_plus
+		}
 	}
 };
 

@@ -35,7 +35,7 @@ static void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
 	uint8_t buffer[8];
 
 	// Read bias registers.
-	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.address, XA_OFFSET_H, buffer, 8);
+	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, XA_OFFSET_H, buffer, 8);
 
 	// Convert them to 16 bit.
 	for (uint8_t i = 0; i < 3; i++) {
@@ -54,10 +54,10 @@ void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
 	uint8_t ACCEL_FS_SEL = scale << 3;
 
 	// Set accelerometer lsb.
-	mpu925x->settings.acceleration_lsb = INT16_MAX / powerof2(scale) / 2 + 1;
+	mpu925x->settings.accelerometer.lsb = INT16_MAX / powerof2(scale) / 2 + 1;
 
 	// Write register.
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, ACCEL_CONFIG, &ACCEL_FS_SEL, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, ACCEL_CONFIG, &ACCEL_FS_SEL, 1);
 }
 
 /**
@@ -75,7 +75,7 @@ void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8
 
 	buffer |= dlpf & 0b111;
 
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, ACCEL_CONFIG_2, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, ACCEL_CONFIG_2, &buffer, 1);
 }
 
 /**
@@ -115,25 +115,25 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
 	}
 
 	// Remove gravity depending on orientation.
-	switch (mpu925x->settings.orientation) {
+	switch (mpu925x->settings.general.orientation) {
 		case mpu925x_x_plus:
-			average[0] += mpu925x->settings.acceleration_lsb;
+			average[0] += mpu925x->settings.accelerometer.lsb;
 			break;
 		case mpu925x_x_minus:
-			average[0] -= mpu925x->settings.acceleration_lsb;
+			average[0] -= mpu925x->settings.accelerometer.lsb;
 			break;
 		case mpu925x_y_plus:
-			average[1] += mpu925x->settings.acceleration_lsb;
+			average[1] += mpu925x->settings.accelerometer.lsb;
 			break;
 		case mpu925x_y_minus:
-			average[1] -= mpu925x->settings.acceleration_lsb;
+			average[1] -= mpu925x->settings.accelerometer.lsb;
 			break;
 		default:
 		case mpu925x_z_plus:
-			average[2] += mpu925x->settings.acceleration_lsb;
+			average[2] += mpu925x->settings.accelerometer.lsb;
 			break;
 		case mpu925x_z_minus:
-			average[2] -= mpu925x->settings.acceleration_lsb;
+			average[2] -= mpu925x->settings.accelerometer.lsb;
 			break;
 	}
 
@@ -142,7 +142,7 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
 	mpu925x_get_accelerometer_bias(mpu925x, bias);
 
 	// Get divider based on scale.
-	uint8_t divider = mpu925x->settings.acceleration_lsb / ACCELEROMETER_SCALE_16G;
+	uint8_t divider = mpu925x->settings.accelerometer.lsb / ACCELEROMETER_SCALE_16G;
 
 	for (uint8_t i = 0; i < 3; i++) {
 		offset[i] = (int16_t)(average[i] / divider);
@@ -163,6 +163,6 @@ void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset)
 	for (uint8_t i = 0; i < 3; i++) {
 		buffer[0] = (uint8_t)((offset[i] >> 8) & 0xFF);
 		buffer[1] = (uint8_t)(offset[i] & 0xFF);
-		mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, XA_OFFSET_H + (i * 3), buffer, 2);
+		mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, XA_OFFSET_H + (i * 3), buffer, 2);
 	}
 }

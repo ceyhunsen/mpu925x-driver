@@ -122,12 +122,42 @@ typedef struct mpu925x_t {
 	 * @brief Holds sensor settings.
 	 * */
 	struct settings {
-		mpu925x_orientation orientation;
-		mpu925x_magnetometer_measurement_mode measurement_mode;
-		mpu925x_magnetometer_bit_mode bit_mode;
-		float acceleration_lsb, gyroscope_lsb, magnetometer_lsb;
-		float magnetometer_coefficient[3];
-		uint8_t address;
+		/**
+		 * @struct general
+		 * @brief General settings for both sensor and driver.
+		 */
+		struct general {
+			mpu925x_orientation orientation;
+			uint8_t address;
+		} general;
+
+		/**
+		 * @struct accelerometer
+		 * @brief Settings for accelerometer.
+		 */
+		struct accelerometer {
+			float lsb;
+		} accelerometer;
+
+		/**
+		 * @struct gyroscope
+		 * @brief Settings for gyroscope.
+		 */
+		struct gyroscope {
+			float lsb;
+			mpu925x_gyroscope_scale scale;
+		} gyroscope;
+
+		/**
+		 * @struct magnetometer
+		 * @brief Settings for magnetometer.
+		 */
+		struct magnetometer {
+			float lsb;
+			float coefficient[3];
+			mpu925x_magnetometer_measurement_mode measurement_mode;
+			mpu925x_magnetometer_bit_mode bit_mode;
+		} magnetometer;
 	} settings;
 
 	/**

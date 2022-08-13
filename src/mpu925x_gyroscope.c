@@ -39,21 +39,21 @@ void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale sca
 	switch (scale) {
 		default:
 		case mpu925x_250dps:
-			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_250_DPS;
+			mpu925x->settings.gyroscope.lsb = GYROSCOPE_SCALE_250_DPS;
 			break;
 		case mpu925x_500dps:
-			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_500_DPS;
+			mpu925x->settings.gyroscope.lsb = GYROSCOPE_SCALE_500_DPS;
 			break;
 		case mpu925x_1000dps:
-			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_1000_DPS;
+			mpu925x->settings.gyroscope.lsb = GYROSCOPE_SCALE_1000_DPS;
 			break;
 		case mpu925x_2000dps:
-			mpu925x->settings.gyroscope_lsb = GYROSCOPE_SCALE_2000_DPS;
+			mpu925x->settings.gyroscope.lsb = GYROSCOPE_SCALE_2000_DPS;
 			break;
 	}
 
 	// Write register.
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, GYRO_CONFIG, &GYRO_FS_SEL, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, GYRO_CONFIG, &GYRO_FS_SEL, 1);
 }
 
 /**
@@ -68,11 +68,11 @@ void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t d
 
 	// Get bypass value.
 	buffer = ~g_fchoice & 0b11;
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, GYRO_CONFIG, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, GYRO_CONFIG, &buffer, 1);
 
 	// Set dlpf.
 	buffer = dlpf & 0b111;
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, CONFIG, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, CONFIG, &buffer, 1);
 }
 
 /**
@@ -116,7 +116,7 @@ void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
 		}
 
 		// Get FS_SEL value.
-		uint8_t fs_sel = mpu925x->settings.gyroscope_scale;
+		uint8_t fs_sel = mpu925x->settings.gyroscope.scale;
 
 		offset[i] = (int16_t)(-average / 4.0 * powerof2(fs_sel));
 	}
@@ -136,6 +136,6 @@ void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset)
 	for (uint8_t i = 0; i < 3; i++) {
 		buffer[0] = offset[i] >> 8;
 		buffer[1] = offset[i];
-		mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, XG_OFFSET_H + i * 2, buffer, 2);
+		mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, XG_OFFSET_H + i * 2, buffer, 2);
 	}
 }

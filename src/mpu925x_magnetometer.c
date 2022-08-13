@@ -37,7 +37,7 @@ void mpu925x_magnetometer_calibrate(mpu925x_t *mpu925x)
 	uint8_t coef_data[3];
 	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, ASAX, coef_data, 3);
 	for (uint8_t i = 0; i < 3; i++) {
-		mpu925x->settings.magnetometer_coefficient[i] = (coef_data[i] - 128) * 0.5 / 128 + 1;
+		mpu925x->settings.magnetometer.coefficient[i] = (coef_data[i] - 128) * 0.5 / 128 + 1;
 	}
 
 	// Set power down mode.
@@ -59,7 +59,7 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
 	uint8_t buffer;
 
 	// Save measurement mode.
-	mpu925x->settings.measurement_mode = measurement_mode;
+	mpu925x->settings.magnetometer.measurement_mode = measurement_mode;
 
 	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, CNTL1, &buffer, 1);
 	buffer &= 0b11110000;
@@ -105,7 +105,7 @@ void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_
 	uint8_t buffer;
 
 	// Save bit mode.
-	mpu925x->settings.bit_mode = bit_mode;
+	mpu925x->settings.magnetometer.bit_mode = bit_mode;
 
 	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, CNTL1, &buffer, 1);
 	buffer &= 0b11101111;
@@ -113,12 +113,12 @@ void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_
 	switch (bit_mode) {
 		case mpu925x_14_bit:
 			buffer |= 0 << 4;
-			mpu925x->settings.magnetometer_lsb = MAGNETOMETER_SCALE_14_BIT;
+			mpu925x->settings.magnetometer.lsb = MAGNETOMETER_SCALE_14_BIT;
 			break;
 		default:
 		case mpu925x_16_bit:
 			buffer |= 1 << 4;
-			mpu925x->settings.magnetometer_lsb = MAGNETOMETER_SCALE_16_BIT;
+			mpu925x->settings.magnetometer.lsb = MAGNETOMETER_SCALE_16_BIT;
 			break;
 	}
 

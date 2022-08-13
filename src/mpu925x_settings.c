@@ -33,7 +33,7 @@
  * */
 void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_divider)
 {
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, SMPLRT_DIV, &sample_rate_divider, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, SMPLRT_DIV, &sample_rate_divider, 1);
 }
 
 /**
@@ -56,5 +56,5 @@ void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock)
 			break;
 	}
 
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, PWR_MGMT_1, &buffer, 1);
 }
