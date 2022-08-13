@@ -33,17 +33,6 @@ extern "C" {
 
 #include "mpu925x.h"
 
-// Internal functions
-// uint8_t __mpu925x_init(mpu925x_t *mpu925x);
-// uint8_t __ak8963_init(mpu925x_t *mpu925x);
-
-// void mpu925x_reset(mpu925x_t *mpu925x);
-// void ak8963_reset(mpu925x_t *mpu925x);
-
-// void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias);
-
-// void mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size, uint8_t and_sentence);
-
 #define convert8bitto16bit(x, y)   (((x) << 8) | (y))
 #define powerof2(x)                (1 << (x))
 
