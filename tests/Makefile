@@ -8,7 +8,6 @@ BUILD_DIR = build
 C_SOURCES = \
 Unity/src/unity.c \
 ../src/mpu925x_core.c \
-../src/mpu925x_settings.c \
 
 C_INCLUDE = \
 -I../inc \
@@ -19,6 +18,7 @@ C_FLAGS = -O2 -Wall $(C_INCLUDE)
 
 # All tests must have a .c file in its exact name.
 TESTS = \
+settings \
 accelerometer \
 gyroscope \
 magnetometer \
@@ -31,11 +31,6 @@ mock:
 	$(BUILD_DIR)/$@.out
 
 core:
-	mkdir -p $(BUILD_DIR)
-	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $(BUILD_DIR)/$@.out
-	$(BUILD_DIR)/$@.out
-
-settings:
 	mkdir -p $(BUILD_DIR)
 	$(CC) $(C_FLAGS) $(C_SOURCES) $@.c -o $(BUILD_DIR)/$@.out
 	$(BUILD_DIR)/$@.out
