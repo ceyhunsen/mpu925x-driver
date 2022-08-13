@@ -53,10 +53,6 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 	buffer = 1 << 1;
 	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, INT_PIN_CFG, &buffer, 1);
 
-	// Disable I2C master mode.
-	buffer = 0 << 5;
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, USER_CTRL, &buffer, 1);
-
 	// WIA register should return 0x48 for AK8963.
 	mpu925x->master_specific.bus_read(mpu925x, AK8963_ADDRESS, WIA, &buffer, 1);
 	if (buffer != 0x48)
@@ -231,7 +227,7 @@ void mpu925x_get_temperature_raw(mpu925x_t *mpu925x)
 static void mpu925x_reset(mpu925x_t *mpu925x)
 {
 	uint8_t buffer = 1 << 7;
-	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.address, PWR_MGMT_1, &buffer, sizeof buffer);
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }
 
@@ -242,6 +238,6 @@ static void mpu925x_reset(mpu925x_t *mpu925x)
 static void ak8963_reset(mpu925x_t *mpu925x)
 {
 	uint8_t buffer = 1;
-	mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, CNTL2, &buffer, 1);
+	mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, CNTL2, &buffer, sizeof buffer);
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }
