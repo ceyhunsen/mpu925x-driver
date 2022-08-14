@@ -57,10 +57,9 @@ int main()
 		},
 
 		.settings = {
-			// Other settings
-			.accelerometer_scale = mpu925x_2g,
-			.gyroscope_scale = mpu925x_250dps,
-			.orientation = mpu925x_z_minus
+			.general = {
+				.orientation = mpu925x_z_minus
+			}
 		}
 	};
 
