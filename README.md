@@ -1,14 +1,14 @@
 # Introduction
 
-This directory includes platform independent device driver for MPU-9250 and MPU-9255 sensors, written in `C` with `C99` standard.
+This directory includes platform independent device driver for MPU-9250 and MPU-9255 sensors.
 
-Some of the features are:
+Main features of the driver are:
 
+* Written in `C` with `C99` standard
+* Platform independent bus interface
+* Separate and independent compilation units for configurable binary size
 * Read raw/converted sensor data
 * Configure sensor/driver
-* Enable/disable interrupts
-* Platform independent interfaces
-* Separate and independent compilation units for configurable binary size
 
 # Documentation
 
