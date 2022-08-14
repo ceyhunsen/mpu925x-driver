@@ -61,13 +61,16 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 	// Reset AK8963.
 	ak8963_reset(mpu925x);
 
-	// Set acceleration range.
+	// Save default accelerometer scale.
 	mpu925x->settings.accelerometer.lsb = ACCELEROMETER_SCALE_2G;
 
-	// Set gyro range.
+	// Save default gyroscope scale.
 	mpu925x->settings.gyroscope.lsb = GYROSCOPE_SCALE_250_DPS;
 
-	// Set temperature room offset.
+	// Save default magnetometer scale.
+	mpu925x->settings.magnetometer.lsb = MAGNETOMETER_SCALE_14_BIT;
+
+	// Save default temperature room offset.
 	mpu925x->settings.thermometer.room_temperature_offset = 0;
 
 	return 0;
