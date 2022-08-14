@@ -67,6 +67,9 @@ uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 	// Set gyro range.
 	mpu925x->settings.gyroscope.lsb = GYROSCOPE_SCALE_250_DPS;
 
+	// Set temperature room offset.
+	mpu925x->settings.thermometer.room_temperature_offset = 0;
+
 	return 0;
 }
 
@@ -210,7 +213,10 @@ void mpu925x_get_temperature(mpu925x_t *mpu925x)
 	mpu925x_get_temperature_raw(mpu925x);
 
 	// Calculate temperature in celsius.
-	mpu925x->sensor_data.temperature = ((mpu925x->sensor_data.temperature_raw - 0) / TEMPERATURE_SCALE) + 21;
+	mpu925x->sensor_data.temperature =
+		((mpu925x->sensor_data.temperature_raw -
+		mpu925x->settings.thermometer.room_temperature_offset)
+		/ TEMPERATURE_SCALE) + 21;
 }
 
 /**

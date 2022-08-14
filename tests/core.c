@@ -80,12 +80,36 @@ void test_gyroscope()
 	TEST_ASSERT_EQUAL_FLOAT(mpu925x.sensor_data.rotation[2], 0.0f);
 }
 
+void test_magnetometer()
+{
+
+}
+
+void test_thermometer()
+{
+	// Initialize driver.
+	mpu925x_init(&mpu925x, 0);
+
+	// Set temperature to 30 celsius.
+	int16_t value = TEMPERATURE_SCALE * 9 + 1;
+	memcpy(mpu_virt_mem + TEMP_OUT_H, &value, sizeof value);
+	mpu_virt_mem[TEMP_OUT_L] = value & 0xFF;
+	mpu_virt_mem[TEMP_OUT_H] = value >> 8;
+
+	// Read sensor data.
+	mpu925x_get_temperature(&mpu925x);
+
+	TEST_ASSERT_EQUAL(mpu925x.sensor_data.temperature, 30.0f);
+}
+
 int main()
 {
 	RUN_TEST(test_init);
 	RUN_TEST(test_i2c_bypass);
 	RUN_TEST(test_accelerometer);
 	RUN_TEST(test_gyroscope);
+	RUN_TEST(test_magnetometer);
+	RUN_TEST(test_thermometer);
 
 	return UnityEnd();
 }

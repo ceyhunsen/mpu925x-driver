@@ -158,6 +158,14 @@ typedef struct mpu925x_t {
 			mpu925x_magnetometer_measurement_mode measurement_mode;
 			mpu925x_magnetometer_bit_mode bit_mode;
 		} magnetometer;
+
+		/**
+		 * @struct thermometer
+		 * @brief Settings for thermometer.
+		 */
+		struct thermometer {
+			int16_t room_temperature_offset;
+		} thermometer;
 	} settings;
 
 	/**
