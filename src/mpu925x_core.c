@@ -32,7 +32,7 @@ static void ak8963_reset(mpu925x_t *mpu925x);
  * @brief Initialize MPU-925X sensor.
  * @param mpu925x MPU-925X struct pointer.
  * @param ad0 Last bit of the slave address (depends on ad0 pin connection).
- * @returns 0 on success, 1 on failure on mpu925x, 2 on failure on AK8963.
+ * @returns 0 on success, 1 on failure on MPU-925X, 2 on failure on AK8963.
  * */
 uint8_t mpu925x_init(mpu925x_t *mpu925x, uint8_t ad0)
 {
