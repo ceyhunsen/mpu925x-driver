@@ -1,7 +1,7 @@
-.. _magnetometer:
+.. _magnetometer-module:
 
-Magnetometer Advanced Usage
-===========================
+Magnetometer Module
+===================
 
 Raw And Translated Data
 ^^^^^^^^^^^^^^^^^^^^^^^

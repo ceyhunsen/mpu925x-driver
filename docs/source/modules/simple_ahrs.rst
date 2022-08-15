@@ -1,10 +1,7 @@
-.. _extras:
-
-Extra Modules
-=============
+.. _simple-ahrs-module:
 
 Simple AHRS
-"""""""""""
+===========
 
 Simple attitude and heading reference system module can return pitch and roll angles using acceleration value. Include ``mpu925x_simple_ahrs.h`` in desired source file and compile ``mpu925x_simple_ahrs.c`` source file with target program.
 

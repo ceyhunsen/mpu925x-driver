@@ -1,7 +1,7 @@
-.. _gyroscope:
+.. _gyroscope-module:
 
-Gyroscope Advanced Usage
-========================
+Gyroscope Module
+================
 
 Raw And Translated Data
 ^^^^^^^^^^^^^^^^^^^^^^^

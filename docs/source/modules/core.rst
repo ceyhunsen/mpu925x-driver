@@ -1,12 +1,15 @@
-.. _initialization:
+.. _core-module:
+
+Core Module
+===========
 
 Initialization
-==============
+^^^^^^^^^^^^^^
 
 Initialization steps are following:
 
 1. Define needed functions and pass their pointers (See: :ref:`porting guide<porting-guide>`).
-2. Create ``mpu925x_t`` struct instance with initial values (See: :ref:`accelerometer<accelerometer>`, :ref:`gyroscope<gyroscope>` and :ref:`magnetometer<magnetometer>`).
+2. Create ``mpu925x_t`` struct instance with initial values (See: :ref:`accelerometer<accelerometer-module>`, :ref:`gyroscope<gyroscope-module>` and :ref:`magnetometer<magnetometer-module>`).
 3. Call mpu925x_init() function with created ``mpu925x_t`` struct and AD0 pin values.
 
 mpu925x_init() Function

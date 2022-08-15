@@ -1,7 +1,7 @@
-.. _accelerometer:
+.. _accelerometer-module:
 
-Accelerometer Advanced Usage
-============================
+Accelerometer Module
+====================
 
 Raw And Translated Data
 ^^^^^^^^^^^^^^^^^^^^^^^

@@ -1,7 +1,7 @@
-.. _general-settings:
+.. _settings-module:
 
-General Settings
-================
+Settings Module
+===============
 
 Sample Rate Divider
 ^^^^^^^^^^^^^^^^^^^
