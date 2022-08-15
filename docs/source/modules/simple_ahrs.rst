@@ -25,7 +25,7 @@ Simple attitude and heading reference system module can return pitch and roll an
 	printf("Pitch: %f, Roll: %f\n", ahrs.pitch, ahrs.roll);
 
 API Reference
-^^^^^^^^^^^^^
+-------------
 
-	.. doxygenfile:: mpu925x_simple_ahrs.h
+.. doxygenfile:: mpu925x_simple_ahrs.h
 	:project: mpu925x-driver

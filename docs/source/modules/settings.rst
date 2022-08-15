@@ -4,7 +4,7 @@ Settings Module
 ===============
 
 Sample Rate Divider
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 Internal sample rate divider is configurable. See MPU-9250 or MPU-9255's datasheet for more info.
 
@@ -12,7 +12,7 @@ Internal sample rate divider is configurable. See MPU-9250 or MPU-9255's datashe
 	:project: mpu925x-driver
 
 Clock Source
-^^^^^^^^^^^^
+------------
 
 Internal clock source is configurable.
 
@@ -20,4 +20,10 @@ Internal clock source is configurable.
 	:project: mpu925x-driver
 
 .. doxygenenum:: mpu925x_clock
+	:project: mpu925x-driver
+
+API Reference
+-------------
+
+.. doxygenfile:: mpu925x_settings.c
 	:project: mpu925x-driver

@@ -3,19 +3,8 @@
 Accelerometer Module
 ====================
 
-Raw And Translated Data
-^^^^^^^^^^^^^^^^^^^^^^^
-
-Raw and translated acceleration datas are available. Calling ``mpu925x_get_acceleration`` function also calls ``mpu925x_get_acceleration_raw`` function internally. Both functions stores data in given ``mpu925x_t`` struct.
-
-.. doxygenfunction:: mpu925x_get_acceleration
-	:project: mpu925x-driver
-
-.. doxygenfunction:: mpu925x_get_acceleration_raw
-	:project: mpu925x-driver
-
 Full-Scale Select
-^^^^^^^^^^^^^^^^^
+-----------------
 
 One can set accelerometer full-scale range of 2g, 4g, 8g and 16g.
 
@@ -26,7 +15,7 @@ One can set accelerometer full-scale range of 2g, 4g, 8g and 16g.
 	:project: mpu925x-driver
 
 Digital Low Pass Filter
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 One can enable hardware digital low pass filter. Look datasheet for more info.
 
@@ -34,7 +23,7 @@ One can enable hardware digital low pass filter. Look datasheet for more info.
 	:project: mpu925x-driver
 
 Offset Cancellation
-^^^^^^^^^^^^^^^^^^^
+-------------------
 
 Offset cancellation consist 2 steps: Getting and setting offset cancellation values. While getting offset cancellation values, sensor must stand still. Also orientation of sensor is very important. Set orientation of sensor with ``.sensor_settings.orientation`` variable in ``mpu925x_t`` struct.
 
@@ -58,3 +47,9 @@ One can use these two methods to get and set offset values or call one unified f
 	mpu925x.settings.orientation = mpu925x_y_plus; // Depends on how sensor is mounted.
 	// Sensor must stand still while offset cancellation.
 	mpu925x_accelerometer_offset_cancellation(&mpu925x, 200);
+
+API Reference
+-------------
+
+.. doxygenfile:: mpu925x_accelerometer.c
+	:project: mpu925x-driver
