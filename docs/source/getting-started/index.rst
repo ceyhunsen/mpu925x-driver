@@ -3,18 +3,37 @@
 Getting Started
 ===============
 
+Modules
+^^^^^^^
+
+This driver is separeted into different and independent modules. Each module includes new functionalities to the driver. These modules are:
+
+* Core [`mpu925x_core.c`]
+* Settings [`mpu925x_settings.c`]
+* Accelerometer [`mpu925x_accelerometer.c`]
+* Gyroscope [`mpu925x_gyroscope.c`]
+* Magnetometer [`mpu925x_magnetometer.c`]
+
+Also there are some extra modules:
+
+* Simple AHRS [`mpu925x_simple_ahrs.c`]
+
+Each module must be compiled with the target program to be used. See: :ref:`modules section<modules>` for more information.
+
 Adding to Your Project
 ^^^^^^^^^^^^^^^^^^^^^^
 
-1. Copy ``mpu925x-driver`` directory to your project's ``drivers`` directory.
+1. Copy ``mpu925x-driver`` directory to your project's ``drivers`` directory or any other directory.
 2. Add ``inc`` directory to your toolchain's include path.
-3. Add ``src/mpu925x_core.c``, ``src/mpu925x_settings.c`` and ``src/mpu925x_internals.c`` source files to your project's build toolchain. 
-4. Provide bus handle, bus read, bus write and delay functions depending on your platform (see: :ref:`porting guide<porting-guide>`).
-5. Include ``mpu925x.h`` header to your desired source files.
-6. [EXTRAS] Extra modules can be compiled with program if any of the extra functionalities needed. Extra modules are located in ``extras`` directory.
+3. Add ``src/mpu925x_core.c`` source file to your project's build toolchain.
+4. Include ``mpu925x.h`` header to your desired source files.
+5. Provide bus handle, bus read, bus write and delay functions depending on your platform (see: :ref:`porting guide<porting-guide>`).
+6. [EXTRAS] If any of the modules other than the core are used, add it's corresponding source files to the project's build toolchain and include path.
 
 Simple Usage
 ^^^^^^^^^^^^
+
+This example code shows core module's initialization and sensor read functionalities.
 
 .. code-block:: c
 	:caption: Example Code
@@ -24,19 +43,19 @@ Simple Usage
 	// Create mpu925x_t struct instance.
 	mpu925x_t mpu925x = {
 		.master_specific = {
+			// Bus handle.
 			.bus_handle = &my_bus_handle,
 
-			// Bus functions
+			// Bus functions.
 			.bus_read = my_bus_read_function_pointer,
 			.bus_write = my_bus_write_function_pointer,
 			.delay_ms = my_delay_function_pointer
 		},
 
 		.settings = {
-			// Other settings
-			.accelerometer_scale = mpu925x_2g,
-			.gyroscope_scale = mpu925x_250dps,
-			.orientation = mpu925x_z_plus
+			.general = {
+				.orientation = mpu925x_z_minus
+			}
 		}
 	};
 
@@ -57,4 +76,4 @@ Simple Usage
 		       mpu925x.sensor_data.magnetic_field[0], mpu925x.sensor_data.magnetic_field[1], mpu925x.sensor_data.magnetic_field[2],);
 	}
 
-See :ref:`advanced usage<advanced-usage>` for more functionalities (e.g. hardware offset cancellation, sensor ranges...).
+See :ref:`modules section<modules>` for other functionalities.

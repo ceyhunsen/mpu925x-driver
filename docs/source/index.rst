@@ -17,7 +17,7 @@ Units
 ^^^^^
 
 * Acceleration from accelerometer: G
-* Angular rotation from gyroscope: Degrees per second (dps)
+* Angular rotation from gyroscope: Degrees per second
 * Magnetic field from magnetometer: Micro Gauss
 * Temperature from thermometer: Celsius degree
 
@@ -32,8 +32,9 @@ This driver is designed to be portable. So, it can be used on any platform that 
 
 	self
 	getting-started/index
+	modules/index
 	porting-guide/index
-	advanced-usage/index
+	.. advanced-usage/index
 	api-reference/index
 
 License
