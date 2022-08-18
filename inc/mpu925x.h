@@ -198,22 +198,22 @@ void mpu925x_set_sample_rate_divider(mpu925x_t *mpu925x, uint8_t sample_rate_div
 void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock);
 
 // Accelerometer settings.
-void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale);
-void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
+void mpu925x_accelerometer_set_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale);
+void mpu925x_accelerometer_set_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
 void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount);
-void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
-void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset);
+void mpu925x_accelerometer_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
+void mpu925x_accelerometer_set_offset(mpu925x_t *mpu925x, int16_t *offset);
 
 // Gyroscope settings.
-void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale);
-void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
+void mpu925x_gyroscope_set_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale);
+void mpu925x_gyroscope_set_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
 void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount);
-void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
-void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset);
+void mpu925x_gyroscope_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
+void mpu925x_gyroscope_set_offset(mpu925x_t *mpu925x, int16_t *offset);
 
 // Magnetometer settings.
-void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode);
-void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode);
+void mpu925x_magnetometer_set_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode);
+void mpu925x_magnetometer_set_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode);
 
 // C++ compatibility.
 #ifdef __cplusplus

@@ -30,7 +30,7 @@
  * @param mpu925x MPU-925X struct pointer.
  * @param bias 3d array which will hold bias values.
  * */
-static void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
+static void mpu925x_accelerometer_get_bias(mpu925x_t *mpu925x, int16_t *bias)
 {
 	uint8_t buffer[8];
 
@@ -48,7 +48,7 @@ static void mpu925x_get_accelerometer_bias(mpu925x_t *mpu925x, int16_t *bias)
  * @param mpu925x MPU-925X struct pointer.
  * @param scale Accelerometer full-scale range to be set.
  * */
-void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale)
+void mpu925x_accelerometer_set_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale)
 {
 	// Get ACCEL_FS_SEL value.
 	uint8_t ACCEL_FS_SEL = scale << 3;
@@ -66,7 +66,7 @@ void mpu925x_set_accelerometer_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
  * @param a_fchoice Accelerometer fchoice bit.
  * @param dlpf Digital low pass filter choice.
  * */
-void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf)
+void mpu925x_accelerometer_set_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf)
 {
 	uint8_t buffer;
 
@@ -82,15 +82,15 @@ void mpu925x_set_accelerometer_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8
  * @brief Get and set accelerometer offset cancellation values.
  * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for acceleration values.
- * @see mpu925x_get_accelerometer_offset
- * @see mpu925x_set_accelerometer_offset
+ * @see mpu925x_accelerometer_get_offset
+ * @see mpu925x_accelerometer_set_offset
  * */
 void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount)
 {
 	int16_t offset[3];
 
-	mpu925x_get_accelerometer_offset(mpu925x, sampling_amount, offset);
-	mpu925x_set_accelerometer_offset(mpu925x, offset);
+	mpu925x_accelerometer_get_offset(mpu925x, sampling_amount, offset);
+	mpu925x_accelerometer_set_offset(mpu925x, offset);
 }
 
 /**
@@ -99,7 +99,7 @@ void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t samp
  * @param sampling_amount Sampling amount for acceleration values.
  * @param offset 3d array which will hold accelerometer offset cancellation values.
  * */
-void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
+void mpu925x_accelerometer_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
 {
 	float average[3] = {0.0, 0.0, 0.0};
 	for (uint16_t i = 0; i < sampling_amount; i++) {
@@ -139,7 +139,7 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
 
 	// Get bias.
 	int16_t bias[3];
-	mpu925x_get_accelerometer_bias(mpu925x, bias);
+	mpu925x_accelerometer_get_bias(mpu925x, bias);
 
 	// Get divider based on scale.
 	uint8_t divider = mpu925x->settings.accelerometer.lsb / ACCELEROMETER_SCALE_16G;
@@ -155,7 +155,7 @@ void mpu925x_get_accelerometer_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
  * @param mpu925x MPU-925X struct pointer.
  * @param offset 3d array which holds accelerometer offset cancellation values.
  * */
-void mpu925x_set_accelerometer_offset(mpu925x_t *mpu925x, int16_t *offset)
+void mpu925x_accelerometer_set_offset(mpu925x_t *mpu925x, int16_t *offset)
 {
 	uint8_t buffer[2];
 

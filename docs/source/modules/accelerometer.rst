@@ -8,7 +8,7 @@ Full-Scale Select
 
 One can set accelerometer full-scale range of 2g, 4g, 8g and 16g.
 
-.. doxygenfunction:: mpu925x_set_accelerometer_scale
+.. doxygenfunction:: mpu925x_accelerometer_set_scale
 	:project: mpu925x-driver
 
 .. doxygenenum:: mpu925x_accelerometer_scale
@@ -19,7 +19,7 @@ Digital Low Pass Filter
 
 One can enable hardware digital low pass filter. Look datasheet for more info.
 
-.. doxygenfunction:: mpu925x_set_accelerometer_dlpf
+.. doxygenfunction:: mpu925x_accelerometer_set_dlpf
 	:project: mpu925x-driver
 
 Offset Cancellation
@@ -30,10 +30,10 @@ Offset cancellation consist 2 steps: Getting and setting offset cancellation val
 .. doxygenenum:: mpu925x_orientation
 	:project: mpu925x-driver
 
-.. doxygenfunction:: mpu925x_get_accelerometer_offset
+.. doxygenfunction:: mpu925x_accelerometer_get_offset
 	:project: mpu925x-driver
 
-.. doxygenfunction:: mpu925x_set_accelerometer_offset
+.. doxygenfunction:: mpu925x_accelerometer_set_offset
 	:project: mpu925x-driver
 
 One can use these two methods to get and set offset values or call one unified function which does 2 of them at once.

@@ -28,10 +28,10 @@
 void mpu925x_magnetometer_calibrate(mpu925x_t *mpu925x)
 {
 	// Set power down mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_power_down_mode);
+	mpu925x_magnetometer_set_measurement_mode(mpu925x, mpu925x_power_down_mode);
 
 	// Enable Fuse ROM access mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_fuse_rom_access_mode);
+	mpu925x_magnetometer_set_measurement_mode(mpu925x, mpu925x_fuse_rom_access_mode);
 
 	// Read coefficient data and save it.
 	uint8_t coef_data[3];
@@ -41,11 +41,11 @@ void mpu925x_magnetometer_calibrate(mpu925x_t *mpu925x)
 	}
 
 	// Set power down mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_power_down_mode);
+	mpu925x_magnetometer_set_measurement_mode(mpu925x, mpu925x_power_down_mode);
 
 	// Set measurement and bit mode.
-	mpu925x_set_magnetometer_measurement_mode(mpu925x, mpu925x_continuous_measurement_mode_2);
-	mpu925x_set_magnetometer_bit_mode(mpu925x, mpu925x_16_bit);
+	mpu925x_magnetometer_set_measurement_mode(mpu925x, mpu925x_continuous_measurement_mode_2);
+	mpu925x_magnetometer_set_bit_mode(mpu925x, mpu925x_16_bit);
 }
 
 /**
@@ -54,7 +54,7 @@ void mpu925x_magnetometer_calibrate(mpu925x_t *mpu925x)
  * @param measurement_mode Measurement mode for magnetometer to be set.
  * @see mpu925x_magnetometer_measurement_mode
  * */
-void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode)
+void mpu925x_magnetometer_set_measurement_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_measurement_mode measurement_mode)
 {
 	uint8_t buffer;
 
@@ -100,7 +100,7 @@ void mpu925x_set_magnetometer_measurement_mode(mpu925x_t *mpu925x, mpu925x_magne
  * @param bit_mode Bit mode for magnetometer to be set.
  * @see mpu925x_magnetometer_bit_mode
  * */
-void mpu925x_set_magnetometer_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode)
+void mpu925x_magnetometer_set_bit_mode(mpu925x_t *mpu925x, mpu925x_magnetometer_bit_mode bit_mode)
 {
 	uint8_t buffer;
 

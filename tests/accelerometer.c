@@ -6,8 +6,35 @@
 
 #include "common.h"
 
+void test_scale()
+{
+	// Initialize driver.
+	mpu925x_init(&mpu925x, 0);
+
+	// Set scale to 2g.
+	mpu925x_accelerometer_set_scale(&mpu925x, mpu925x_2g);
+
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 0 << 3);
+
+	// Set scale to 4g.
+	mpu925x_accelerometer_set_scale(&mpu925x, mpu925x_4g);
+
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 1 << 3);
+
+	// Set scale to 8g.
+	mpu925x_accelerometer_set_scale(&mpu925x, mpu925x_8g);
+
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 2 << 3);
+
+	// Set scale to 16g.
+	mpu925x_accelerometer_set_scale(&mpu925x, mpu925x_16g);
+
+	TEST_ASSERT_EQUAL(mpu_virt_mem[ACCEL_CONFIG], 3 << 3);
+}
+
 int main()
 {
+	RUN_TEST(test_scale);
 
 	return UnityEnd();
 }

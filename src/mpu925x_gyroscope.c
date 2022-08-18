@@ -30,7 +30,7 @@
  * @param mpu925x MPU-925X struct pointer.
  * @param scale Gyroscope full-scale range to be set.
  * */
-void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale)
+void mpu925x_gyroscope_set_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale scale)
 {
 	// Get GYRO_FS_SEL value.
 	uint8_t GYRO_FS_SEL = scale << 3;
@@ -62,7 +62,7 @@ void mpu925x_set_gyroscope_scale(mpu925x_t *mpu925x, mpu925x_gyroscope_scale sca
  * @param g_fchoice Gyroscope f_choice bits.
  * @param dlpf Digital low pass filter setting.
  * */
-void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t dlpf)
+void mpu925x_gyroscope_set_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t dlpf)
 {
 	uint8_t buffer;
 
@@ -79,15 +79,15 @@ void mpu925x_set_gyroscope_dlpf(mpu925x_t *mpu925x, uint8_t g_fchoice, uint8_t d
  * @brief Get and set gyroscope offset cancellation values.
  * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for rotation values.
- * @see mpu925x_get_gyroscope_offset
- * @see mpu925x_set_gyroscope_offset
+ * @see mpu925x_gyroscope_get_offset
+ * @see mpu925x_gyroscope_set_offset
  * */
 void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount)
 {
 	int16_t offset[3];
 
-	mpu925x_get_gyroscope_offset(mpu925x, sampling_amount, offset);
-	mpu925x_set_gyroscope_offset(mpu925x, offset);
+	mpu925x_gyroscope_get_offset(mpu925x, sampling_amount, offset);
+	mpu925x_gyroscope_set_offset(mpu925x, offset);
 }
 
 /**
@@ -95,9 +95,9 @@ void mpu925x_gyroscope_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling
  * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for rotation values.
  * @param offset 3d array which holds gyroscope offset cancellation values.
- * @see mpu925x_set_gyroscope_offset
+ * @see mpu925x_gyroscope_set_offset
  * */
-void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
+void mpu925x_gyroscope_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
 {
 	// Offsets of x, y and z axis are calculated seperately.
 	for (uint8_t i = 0; i < 3; i++) {
@@ -126,9 +126,9 @@ void mpu925x_get_gyroscope_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
  * @brief Set gyroscope offset cancellation values.
  * @param mpu925x MPU-925X struct pointer.
  * @param offset 3d array which holds gyroscope offset cancellation values.
- * @see mpu925x_get_gyroscope_offset
+ * @see mpu925x_gyroscope_get_offset
  * */
-void mpu925x_set_gyroscope_offset(mpu925x_t *mpu925x, int16_t *offset)
+void mpu925x_gyroscope_set_offset(mpu925x_t *mpu925x, int16_t *offset)
 {
 	uint8_t buffer[2];
 
