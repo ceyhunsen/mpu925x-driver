@@ -118,7 +118,7 @@ void mpu925x_gyroscope_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, 
 		// Get FS_SEL value.
 		uint8_t fs_sel = mpu925x->settings.gyroscope.scale;
 
-		offset[i] = (int16_t)(-average / 4.0 * powerof2(fs_sel));
+		offset[i] = (int16_t)(-average / 4.0 * power_of_2(fs_sel));
 	}
 }
 

@@ -126,7 +126,7 @@ void mpu925x_get_acceleration_raw(mpu925x_t *mpu925x)
 	// Read raw acceleration data.
 	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, ACCEL_XOUT_H, buffer, 6);
 	for (uint8_t i = 0; i < 3; i++) {
-		mpu925x->sensor_data.acceleration_raw[i] = convert8bitto16bit(buffer[i * 2], buffer[i * 2 + 1]);
+		mpu925x->sensor_data.acceleration_raw[i] = convert_8_bit_to_16_bit(buffer[i * 2], buffer[i * 2 + 1]);
 	}
 }
 
@@ -155,7 +155,7 @@ void mpu925x_get_rotation_raw(mpu925x_t *mpu925x)
 
 	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, GYRO_XOUT_H, buffer, 6);
 	for (uint8_t i = 0; i < 3; i++) {
-		mpu925x->sensor_data.rotation_raw[i] = convert8bitto16bit(buffer[i * 2], buffer[i * 2 + 1]);
+		mpu925x->sensor_data.rotation_raw[i] = convert_8_bit_to_16_bit(buffer[i * 2], buffer[i * 2 + 1]);
 	}
 }
 
@@ -203,7 +203,7 @@ void mpu925x_get_magnetic_field_raw(mpu925x_t *mpu925x)
 	}
 
 	for (uint8_t i = 0; i < 3; i++) {
-		mpu925x->sensor_data.magnet_raw[i] = convert8bitto16bit(buffer[i * 2 + 1], buffer[i * 2]);
+		mpu925x->sensor_data.magnet_raw[i] = convert_8_bit_to_16_bit(buffer[i * 2 + 1], buffer[i * 2]);
 	}
 }
 
@@ -232,7 +232,7 @@ void mpu925x_get_temperature_raw(mpu925x_t *mpu925x)
 
 	// Read raw temperature data.
 	mpu925x->master_specific.bus_read(mpu925x, mpu925x->settings.general.address, TEMP_OUT_H, buffer, 2);
-	mpu925x->sensor_data.temperature_raw = convert8bitto16bit(buffer[0], buffer[1]);
+	mpu925x->sensor_data.temperature_raw = convert_8_bit_to_16_bit(buffer[0], buffer[1]);
 }
 
 /**

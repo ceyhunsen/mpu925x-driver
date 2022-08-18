@@ -33,8 +33,8 @@ extern "C" {
 
 #include "mpu925x.h"
 
-#define convert8bitto16bit(x, y)   (((x) << 8) | (y))
-#define powerof2(x)                (1 << (x))
+#define convert_8_bit_to_16_bit(x, y)  (((x) << 8) | (y))
+#define power_of_2(x)                    (1 << (x))
 
 // Slave addresses
 #define MPU925X_ADDRESS            0b1101000
