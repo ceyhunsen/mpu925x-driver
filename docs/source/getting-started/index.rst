@@ -4,7 +4,7 @@ Getting Started
 ===============
 
 Modules
-^^^^^^^
+-------
 
 This driver is separeted into different and independent modules. Each module includes new functionalities to the driver. These modules are:
 
@@ -21,7 +21,7 @@ Also there are some extra modules:
 Each module must be compiled with the target program to be used. See: :ref:`modules section<modules>` for more information.
 
 Adding to Your Project
-^^^^^^^^^^^^^^^^^^^^^^
+----------------------
 
 1. Copy ``mpu925x-driver`` directory to your project's ``drivers`` directory or any other directory.
 2. Add ``inc`` directory to your toolchain's include path.
@@ -31,7 +31,7 @@ Adding to Your Project
 6. [EXTRAS] If any of the modules other than the core are used, add it's corresponding source files to the project's build toolchain and include path.
 
 Simple Usage
-^^^^^^^^^^^^
+------------
 
 This example code shows core module's initialization and sensor read functionalities.
 
@@ -77,3 +77,23 @@ This example code shows core module's initialization and sensor read functionali
 	}
 
 See :ref:`modules section<modules>` for other functionalities.
+
+Naming Conventions
+------------------
+
+Because C doesn't have namespaces or classes, all function and enum names follows these conventions:
+
+1. Uses snake case.
+2. Starts with ``mpu925x_`` prefix.
+3. Continuous with module name (e.g. ``accelerometer_``) except settings module.
+4. Ends with intended name for function or enum (e.g. ``set_scale``).
+
+Examples:
+
+* ``mpu925x_accelerometer_set_scale()``: Accelerometer module, scale select funtion.
+* ``mpu925x_gyroscope_offset_cancellation()``: Gyroscope module, offset cancellation function.
+* ``mpu925x_set_sample_rate_divider()``: General settings module, sample rate divider select function.
+* ``mpu925x_clock``: General settings module, clock settings enum.
+* ``mpu925x_magnetometer_measurement_mode``: Magnetometer module, measurement mode enum.
+
+With these conventions, it will be pain free to add this driver to any project and easier to find any function or enum.
