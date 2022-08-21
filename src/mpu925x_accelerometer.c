@@ -28,7 +28,7 @@
 /**
  * @brief Get accelerometer bias.
  * @param mpu925x MPU-925X struct pointer.
- * @param bias Array which will hold bias values.
+ * @param bias Buffer for acceleromter bias values.
  * */
 static void mpu925x_accelerometer_get_bias(mpu925x_t *mpu925x, int16_t *bias)
 {
@@ -63,8 +63,7 @@ void mpu925x_accelerometer_set_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
 /**
  * @brief Set accelerometer digital low pass filter setting.
  * @param mpu925x MPU-925X struct pointer.
- * @param a_fchoice Accelerometer fchoice bit.
- * @param dlpf Digital low pass filter choice.
+ * @param dlpf Bandwith choice for dlpf.
  * */
 void mpu925x_accelerometer_set_dlpf(mpu925x_t *mpu925x, mpu925x_accelerometer_dlpf dlpf)
 {
@@ -104,7 +103,7 @@ void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t samp
  * @brief Get accelerometer offset cancellation value.
  * @param mpu925x MPU-925X struct pointer.
  * @param sampling_amount Sampling amount for acceleration values.
- * @param offset Array which will hold accelerometer offset cancellation values.
+ * @param offset Buffer for offset cancellation values.
  * */
 void mpu925x_accelerometer_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset)
 {
@@ -162,7 +161,7 @@ void mpu925x_accelerometer_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amou
 /**
  * @brief Set accelerometer offset cancellation value.
  * @param mpu925x MPU-925X struct pointer.
- * @param offset Array which holds accelerometer offset cancellation values.
+ * @param offset Buffer for offset cancellation values.
  * */
 void mpu925x_accelerometer_set_offset(mpu925x_t *mpu925x, int16_t *offset)
 {
@@ -174,7 +173,7 @@ void mpu925x_accelerometer_set_offset(mpu925x_t *mpu925x, int16_t *offset)
 		buffer[0] = (uint8_t)((offset[i] >> 8) & 0xFF);
 		buffer[1] = (uint8_t)(offset[i] & 0xFF);
 
-		// Write to register.
+		// Write to registers.
 		mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, XA_OFFSET_H + (i * 3), buffer, 2);
 	}
 }

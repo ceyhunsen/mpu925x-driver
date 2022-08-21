@@ -6,7 +6,7 @@ Accelerometer Module
 Full-Scale Select
 -----------------
 
-One can set accelerometer full-scale range of 2g, 4g, 8g and 16g.
+Accelerometer scale can be selected with this function and enum combination:
 
 .. doxygenfunction:: mpu925x_accelerometer_set_scale
 	:project: mpu925x-driver
@@ -17,18 +17,32 @@ One can set accelerometer full-scale range of 2g, 4g, 8g and 16g.
 Digital Low Pass Filter
 -----------------------
 
-One can enable hardware digital low pass filter. Look datasheet for more info.
+Accelerometer digital low pass filter can be activated with this function and enum combination:
 
 .. doxygenfunction:: mpu925x_accelerometer_set_dlpf
 	:project: mpu925x-driver
 
+.. doxygenenum:: mpu925x_accelerometer_dlpf
+	:project: mpu925x-driver
+
+.. csv-table:: Accelerometer DLPF Data Rates and Bandwiths (Normal Mode)
+	:header: "Bandwith (Hz)", "Delay (ms)", "Noise Density (ug/rtHz)", "Rate (kHz)"
+
+	1.13 K, 0.75, 250, 4
+	460, 1.94, 250, 4
+	184, 5.80, 250, 4
+	92, 7.80, 250, 4
+	41, 11.80, 250, 4
+	20, 19.80, 250, 4
+	10, 35.70, 250, 4
+	5, 66.96, 250, 4
+
 Offset Cancellation
 -------------------
 
-Offset cancellation consist 2 steps: Getting and setting offset cancellation values. While getting offset cancellation values, sensor must stand still. Also orientation of sensor is very important. Set orientation of sensor with ``.sensor_settings.orientation`` variable in ``mpu925x_t`` struct.
+Offset cancellation consist 2 steps: Getting and setting offset cancellation values. While getting offset cancellation values, sensor must stand still. Also orientation of sensor is very important. Set orientation of sensor with ``orientation`` variable in ``mpu925x_t.sensor_settings`` struct before offset cancellation.
 
-.. doxygenenum:: mpu925x_orientation
-	:project: mpu925x-driver
+Also there is 2 available options for offset cancellation: manually get and set or let the unified function do it. Unified function calls get and set functions internally. So both methods result the same thing. But if unified function is called, offset values can't be accessed by user. If offset values wanted to stored somewhere else, offset cancellation should be done manually.
 
 .. doxygenfunction:: mpu925x_accelerometer_get_offset
 	:project: mpu925x-driver
@@ -36,9 +50,10 @@ Offset cancellation consist 2 steps: Getting and setting offset cancellation val
 .. doxygenfunction:: mpu925x_accelerometer_set_offset
 	:project: mpu925x-driver
 
-One can use these two methods to get and set offset values or call one unified function which does 2 of them at once.
-
 .. doxygenfunction:: mpu925x_accelerometer_offset_cancellation
+	:project: mpu925x-driver
+
+.. doxygenenum:: mpu925x_orientation
 	:project: mpu925x-driver
 
 .. code-block:: c
