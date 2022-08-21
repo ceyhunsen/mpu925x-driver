@@ -182,6 +182,8 @@ extern "C" {
 #define ASAY                       0x11
 #define ASAZ                       0x12
 
+uint8_t __mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size, uint8_t bits);
+
 #ifdef __cplusplus
 }
 #endif // __cplusplus

@@ -218,6 +218,30 @@ void test_mock_ak_read_edge()
 	TEST_ASSERT_EQUAL(write_data, read_data);
 }
 
+void test_write_preserve()
+{
+	// Data should be changed from 26 to 25 in this test.
+
+	// Set previous data.
+	uint8_t previous_data = (3 << 3) | (2 << 0);
+	mpu_virt_mem[GYRO_CONFIG] = previous_data;
+
+	// Check previous data is 26.
+	TEST_ASSERT_EQUAL(mpu_virt_mem[GYRO_CONFIG], 26);
+
+	// Create data to be written.
+	uint8_t write_data = 1 << 0;
+
+	// Write using interface.
+	__mpu925x_bus_write_preserve(&mpu925x, MPU925X_ADDRESS, GYRO_CONFIG, &write_data, sizeof write_data, 0b11);
+
+	// Check both are written.
+	TEST_ASSERT_EQUAL(mpu_virt_mem[GYRO_CONFIG], 25);
+
+	// Check it's not a simple or operation.
+	TEST_ASSERT_NOT_EQUAL(mpu_virt_mem[GYRO_CONFIG], previous_data | write_data);
+}
+
 int main()
 {
 	RUN_TEST(test_virt_mem_reset_1);
@@ -231,6 +255,8 @@ int main()
 	RUN_TEST(test_mock_mpu_read_edge);
 	RUN_TEST(test_mock_ak_write_edge);
 	RUN_TEST(test_mock_ak_read_edge);
+
+	RUN_TEST(test_write_preserve);
 
 	return UNITY_END();
 }

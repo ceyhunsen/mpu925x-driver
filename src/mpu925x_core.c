@@ -256,3 +256,34 @@ static void ak8963_reset(mpu925x_t *mpu925x)
 	mpu925x->master_specific.bus_write(mpu925x, AK8963_ADDRESS, CNTL2, &buffer, sizeof buffer);
 	mpu925x->master_specific.delay_ms(mpu925x, 100);
 }
+
+/**
+ * @brief Write to the bus whilst preserving other bits. This function is private.
+ * @param mpu925x MPU-925X struct pointer.
+ * @param slave_address Target slave address.
+ * @param reg Target register
+ * @param buffer Buffer that holds write data.
+ * @param size Buffer size.
+ * @param bits Bits that will be changed.
+ * @returns 0 on success, 1 otherwise.
+ */
+uint8_t __mpu925x_bus_write_preserve(mpu925x_t *mpu925x, uint8_t slave_address, uint8_t reg, uint8_t *buffer, uint8_t size, uint8_t bits)
+{
+	uint8_t tmp;
+
+	for (uint16_t i = 0; i < size; i++) {
+		// Get previous data.
+		mpu925x->master_specific.bus_read(mpu925x, slave_address, reg, &tmp, sizeof tmp);
+
+		// Reset desired bits.
+		tmp &= ~bits;
+
+		// Save new data.
+		buffer[i] |= tmp;
+	}
+
+	// Write new data.
+	mpu925x->master_specific.bus_write(mpu925x, slave_address, reg, buffer, size);
+
+	return 0;
+}
