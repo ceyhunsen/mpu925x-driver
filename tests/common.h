@@ -116,6 +116,9 @@ void setUp()
 	// Set accelerometer values.
 	mpu_virt_mem[ACCEL_ZOUT_L] = ACCELEROMETER_SCALE_2G & 0xFF;
 	mpu_virt_mem[ACCEL_ZOUT_H] = ACCELEROMETER_SCALE_2G >> 8;
+
+	// Initialize driver.
+	mpu925x_init(&mpu925x, 0);
 }
 
 /**

@@ -67,6 +67,21 @@ typedef enum mpu925x_accelerometer_scale {
 } mpu925x_accelerometer_scale;
 
 /**
+ * @enum mpu925x_accelerometer_dlpf
+ * @brief Accelerometer digital low pass filter, output bandwith choices.
+ */
+typedef enum mpu925x_accelerometer_dlpf {
+	mpu925x_1_13k = -1,
+	mpu925x_460 = 0,
+	mpu925x_184,
+	mpu925x_92,
+	mpu925x_41,
+	mpu925x_20,
+	mpu925x_10,
+	mpu925x_5,
+} mpu925x_accelerometer_dlpf;
+
+/**
  * @enum mpu925x_gyroscope_scale
  * @brief Gyroscope full-scale ranges for gyroscope.
  * */
@@ -199,7 +214,7 @@ void mpu925x_set_clock_source(mpu925x_t *mpu925x, mpu925x_clock clock);
 
 // Accelerometer settings.
 void mpu925x_accelerometer_set_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_scale scale);
-void mpu925x_accelerometer_set_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf);
+void mpu925x_accelerometer_set_dlpf(mpu925x_t *mpu925x, mpu925x_accelerometer_dlpf dlpf);
 void mpu925x_accelerometer_offset_cancellation(mpu925x_t *mpu925x, uint16_t sampling_amount);
 void mpu925x_accelerometer_get_offset(mpu925x_t *mpu925x, uint16_t sampling_amount, int16_t *offset);
 void mpu925x_accelerometer_set_offset(mpu925x_t *mpu925x, int16_t *offset);

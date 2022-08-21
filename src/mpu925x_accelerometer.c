@@ -66,15 +66,21 @@ void mpu925x_accelerometer_set_scale(mpu925x_t *mpu925x, mpu925x_accelerometer_s
  * @param a_fchoice Accelerometer fchoice bit.
  * @param dlpf Digital low pass filter choice.
  * */
-void mpu925x_accelerometer_set_dlpf(mpu925x_t *mpu925x, uint8_t a_fchoice, uint8_t dlpf)
+void mpu925x_accelerometer_set_dlpf(mpu925x_t *mpu925x, mpu925x_accelerometer_dlpf dlpf)
 {
 	uint8_t buffer;
 
-	// Invert value to get bypass value.
-	buffer = (~a_fchoice & 1) << 3;
+	// Get register value according to setting.
+	switch (dlpf) {
+		case mpu925x_1_13k:
+			buffer = 1 << 3 | (0 << 2);
+			break;
+		default:
+			buffer = (0 << 3) | (dlpf << 2);
+			break;
+	}
 
-	buffer |= dlpf & 0b111;
-
+	// Write to the register.
 	mpu925x->master_specific.bus_write(mpu925x, mpu925x->settings.general.address, ACCEL_CONFIG_2, &buffer, 1);
 }
 
