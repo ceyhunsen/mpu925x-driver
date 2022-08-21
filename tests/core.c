@@ -17,17 +17,11 @@ void test_init()
 
 void test_i2c_bypass()
 {
-	// Initialize driver.
-	mpu925x_init(&mpu925x, 0);
-
 	TEST_ASSERT_EQUAL(mpu_virt_mem[INT_PIN_CFG], 1 << 1);
 }
 
 void test_accelerometer()
 {
-	// Initialize driver.
-	mpu925x_init(&mpu925x, 0);
-
 	// Read sensor data.
 	mpu925x_get_acceleration(&mpu925x);
 
@@ -51,9 +45,6 @@ void test_accelerometer()
 
 void test_gyroscope()
 {
-	// Initialize driver.
-	mpu925x_init(&mpu925x, 0);
-
 	// Read sensor data.
 	mpu925x_get_rotation(&mpu925x);
 
@@ -87,9 +78,6 @@ void test_magnetometer()
 
 void test_thermometer()
 {
-	// Initialize driver.
-	mpu925x_init(&mpu925x, 0);
-
 	// Set temperature to 30 celsius.
 	int16_t value = TEMPERATURE_SCALE * 9 + 1;
 	memcpy(mpu_virt_mem + TEMP_OUT_H, &value, sizeof value);

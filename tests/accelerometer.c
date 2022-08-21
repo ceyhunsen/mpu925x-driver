@@ -8,9 +8,6 @@
 
 void test_scale()
 {
-	// Initialize driver.
-	mpu925x_init(&mpu925x, 0);
-
 	// Set scale to 2g.
 	mpu925x_accelerometer_set_scale(&mpu925x, mpu925x_2g);
 
